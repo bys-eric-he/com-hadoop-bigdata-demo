@@ -3,6 +3,7 @@ package com.hadoop.hive.controller;
 import com.hadoop.hive.common.Result;
 import com.hadoop.hive.common.ResultUtil;
 import com.hadoop.hive.entity.Student;
+import com.hadoop.hive.entity.StudentHobby;
 import com.hadoop.hive.repository.HiveRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,6 +47,18 @@ public class HiveController {
     @RequestMapping(path = "/listForObject", method = RequestMethod.POST)
     public Result<List<Student>> getListForObject(@RequestParam String sql) {
         List<Student> result = hiveRepository.getListForObject(sql);
+        return ResultUtil.success(result);
+    }
+
+    /**
+     * 获取所有学生爱好
+     * @param sql
+     * @return
+     */
+    @ApiOperation("获取表全部记录")
+    @RequestMapping(path = "/listStudentHobbyForObject", method = RequestMethod.POST)
+    public Result<List<StudentHobby>> getListStudentHobby(@RequestParam String sql) {
+        List<StudentHobby> result = hiveRepository.getListStudentHobby(sql);
         return ResultUtil.success(result);
     }
 

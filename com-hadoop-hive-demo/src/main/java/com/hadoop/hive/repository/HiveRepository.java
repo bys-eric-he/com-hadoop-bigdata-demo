@@ -2,6 +2,7 @@ package com.hadoop.hive.repository;
 
 import com.hadoop.hive.annotation.LogAspect;
 import com.hadoop.hive.entity.Student;
+import com.hadoop.hive.entity.StudentHobby;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -68,6 +69,17 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
 
         //如果想查真正的object应该为
         return this.getJdbcTemplate().query(sql, new Object[]{}, new BeanPropertyRowMapper<>(Student.class));
+    }
+
+    /**
+     * 获取学生爱好列表
+     *
+     * @param sql
+     * @return
+     */
+    @LogAspect(value = "getListStudentHobby")
+    public List<StudentHobby> getListStudentHobby(String sql) {
+        return this.getJdbcTemplate().query(sql, new Object[]{}, new BeanPropertyRowMapper<>(StudentHobby.class));
     }
 
     /**
