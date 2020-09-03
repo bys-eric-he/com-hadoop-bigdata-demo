@@ -7,7 +7,7 @@ public class ResultUtil {
     private static final int SUCCESS_CODE = 200;
     private static final int FAILURE_CODE = 500;
     private static final String BASE_ERROR_CODE = "BASE-SYS-ERR-0";
-    private static final String BASE_ERROR_MSG = "网络繁忙，请稍后再试";
+    private static final String BASE_ERROR_MSG = "系统错误,请稍后再试,或联系管理员!";
 
     /**
      * 返回成功result
@@ -30,7 +30,6 @@ public class ResultUtil {
         return new Result<>(SUCCESS_CODE, null, null, data);
     }
 
-
     /**
      * 返回失败result
      *
@@ -41,7 +40,6 @@ public class ResultUtil {
         return failure(BASE_ERROR_CODE, BASE_ERROR_MSG, null);
     }
 
-
     /**
      * 返回失败result
      *
@@ -51,7 +49,6 @@ public class ResultUtil {
     public static <T> Result<T> failure(String errCode) {
         return failure(errCode, null, null);
     }
-
 
     /**
      * 返回失败result
@@ -97,16 +94,13 @@ public class ResultUtil {
      */
     private static <T> Result<T> getFailResult(String errCode, String errMsg, T data) {
         if (StringUtils.isEmpty(errCode)) {
-            if (StringUtils.isEmpty(errMsg)) {
-                //获取msg
-                if (StringUtils.isEmpty(errMsg)) {
-                    errMsg = BASE_ERROR_MSG;
-                }
-            }
-        } else {
             errCode = BASE_ERROR_CODE;
+
+        }
+        if (StringUtils.isEmpty(errMsg)) {
             errMsg = BASE_ERROR_MSG;
         }
+
         return new Result<>(FAILURE_CODE, errCode, errMsg, data);
     }
 }

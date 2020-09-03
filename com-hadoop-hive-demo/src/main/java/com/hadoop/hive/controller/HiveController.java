@@ -7,10 +7,7 @@ import com.hadoop.hive.repository.HiveRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +20,7 @@ public class HiveController {
     @Autowired
     private HiveRepository hiveRepository;
 
-    @ApiOperation("list")
+    @ApiOperation("执行SQL获取数据记录")
     @RequestMapping(path = "/list", method = RequestMethod.POST)
     public Result<List<Map<String, Object>>> list(@RequestParam String sql) {
         List<Map<String, Object>> list = hiveRepository.queryForList(sql);
@@ -31,36 +28,46 @@ public class HiveController {
         return ResultUtil.success(list);
     }
 
-    @ApiOperation("get")
+    @ApiOperation("获取指定id记录")
     @RequestMapping(path = "/get", method = RequestMethod.GET)
     public Result<Student> getLimitOne(@RequestParam String id) {
-        String sql = "select * from student where id ='" + id + "'";
+        String sql = "select id,name,score,age from student where id ='" + id + "'";
         Student result = hiveRepository.getLimitOne(sql);
         return ResultUtil.success(result);
     }
 
-    @ApiOperation("listForObject")
-    @RequestMapping(path = "/listForObject", method = RequestMethod.GET)
-    public Result<List<Student>> getListForObject() {
-        String sql = "select * from student";
+    /**
+     * 获取表全部记录
+     *
+     * @param sql select id,name,score,age from student
+     * @return
+     */
+    @ApiOperation("获取表全部记录")
+    @RequestMapping(path = "/listForObject", method = RequestMethod.POST)
+    public Result<List<Student>> getListForObject(@RequestParam String sql) {
         List<Student> result = hiveRepository.getListForObject(sql);
         return ResultUtil.success(result);
     }
 
-    @ApiOperation("createTable")
-    @RequestMapping(path = "/createTable", method = RequestMethod.GET)
-    public Result<String> createTable() {
-
-        String sql = "CREATE TABLE IF NOT EXISTS " + "student_sample" +
-                "(user_num BIGINT, user_name STRING, user_gender STRING, user_age INT)" +
-                "ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' " + // 定义分隔符
-                "STORED AS TEXTFILE";// 作为文本存储
+    /**
+     * 创建表
+     *
+     * @param sql CREATE TABLE IF NOT EXISTS student_sample(user_num BIGINT, user_name STRING, user_gender STRING, user_age INT)ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE;
+     * @return
+     */
+    @ApiOperation("创建表")
+    @RequestMapping(path = "/createTable", method = RequestMethod.POST)
+    public Result<String> createTable(@RequestParam String sql) {
         String result = hiveRepository.createTable(sql);
-
         return ResultUtil.success(result);
     }
 
-    @ApiOperation("loadIntoTable")
+    /**
+     * 加载文件数据到表
+     *
+     * @return
+     */
+    @ApiOperation("加载文件数据到表")
     @RequestMapping(path = "/loadIntoTable", method = RequestMethod.GET)
     public Result<String> loadIntoTable() {
         String filePath = "/home/hive_data/student_sample.txt";
@@ -70,7 +77,7 @@ public class HiveController {
         return ResultUtil.success(result);
     }
 
-    @ApiOperation("listAllTables")
+    @ApiOperation("获取所有表")
     @RequestMapping(path = "/listAllTables", method = RequestMethod.GET)
     public Result<List<String>> listAllTables() {
         try {
@@ -81,10 +88,9 @@ public class HiveController {
         }
     }
 
-    @ApiOperation("describeTable")
-    @RequestMapping(path = "/describeTable", method = RequestMethod.GET)
-    public Result<List<String>> describeTable() {
-        String tableName = "student_sample";
+    @ApiOperation("获取表结构")
+    @RequestMapping(path = "/describeTable/{tableName}", method = RequestMethod.GET)
+    public Result<List<String>> describeTable(@PathVariable String tableName) {
         try {
             List<String> results = hiveRepository.describeTable(tableName);
             return ResultUtil.success(results);

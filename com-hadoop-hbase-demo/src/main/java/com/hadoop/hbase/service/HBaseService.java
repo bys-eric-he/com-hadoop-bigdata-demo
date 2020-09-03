@@ -20,7 +20,7 @@ public interface HBaseService {
      * @param tableName      表名
      * @param columnFamilies 列族（数组）
      */
-    void createTable(String tableName, String[] columnFamilies) throws IOException;
+    void createTable(String tableName, String[] columnFamilies) throws Exception;
 
     /**
      * 创建表
@@ -99,6 +99,17 @@ public interface HBaseService {
      */
     String selectValue(String tableName, String rowKey, String columnFamily, String column) throws IOException;
 
+    /**
+     * 查找单行单列族单列记录
+     *
+     * @param tableName    表名
+     * @param rowKey       行名
+     * @param columnFamily 列族名
+     * @param column       列名
+     * @param maxVersions  获取多少个版本的数据
+     * @return
+     */
+    String selectValue(String tableName, String rowKey, String columnFamily, String column, int maxVersions) throws Exception;
     /**
      * 查询表中所有行（Scan方式）
      *

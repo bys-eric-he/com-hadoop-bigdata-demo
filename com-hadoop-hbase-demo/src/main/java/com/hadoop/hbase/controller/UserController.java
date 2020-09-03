@@ -24,24 +24,45 @@ public class UserController {
 
     private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
+    /**
+     * 创建表
+     *
+     * @param tableName
+     * @param columnFamilies
+     * @return
+     * @throws Exception
+     */
     @PostMapping(path = "/create")
-    @ApiOperation("createTable")
-    public void createTable(@RequestParam(value = "tableName") String tableName, String[] columnFamilies) {
+    @ApiOperation("创建表")
+    public Result<String> createTable(@RequestParam(value = "tableName") String tableName, String[] columnFamilies) throws Exception {
         try {
             hBaseService.createTable(tableName, columnFamilies);
         } catch (Exception ex) {
-            logger.error("创建HBase表{}异常!异常信息->{}", tableName, ex.getMessage());
+            logger.error("创建HBase表{}异常!异常信息->{}", tableName, ex);
+            throw ex;
         }
+
+        return ResultUtil.success();
     }
 
+    /**
+     * 插入或更新数据
+     *
+     * @param tableName
+     * @param row
+     * @param columnFamily
+     * @param column
+     * @param value
+     * @return
+     */
     @PostMapping(path = "/insert")
-    @ApiOperation("insertOrUpdate")
+    @ApiOperation("插入或更新数据")
     public Result<String> insertOrUpdate(@RequestParam(value = "tableName") String tableName, String row, String columnFamily, String column, String value) {
         try {
 
             hBaseService.insertOneRecord(tableName, row, columnFamily, column, value);
         } catch (Exception ex) {
-            logger.error("插入数据到HBase表{}异常!异常信息->{}", tableName, ex.getMessage());
+            logger.error("插入数据到HBase表{}异常!异常信息->{}", tableName, ex);
         }
         /**
          * shell 结果
@@ -58,9 +79,14 @@ public class UserController {
         return ResultUtil.success();
     }
 
-
+    /**
+     * 获取全表数据
+     *
+     * @param tableName
+     * @return
+     */
     @GetMapping(path = "/scan/{tableName}")
-    @ApiOperation("scanTableForAllRecord")
+    @ApiOperation("获取全表数据")
     public Result<Map<String, Object>> scanTable(@PathVariable String tableName) {
         Map<String, Object> dataMap = new HashMap<>();
         try {
@@ -69,10 +95,45 @@ public class UserController {
             logger.info("获取到HBase->表{}的内容：\n{}", tableName, value);
             dataMap.put(tableName, value);
         } catch (Exception ex) {
-            logger.error("获取HBase表{}的内容异常!异常信息->{}", tableName, ex.getMessage());
+            logger.error("获取HBase表{}的内容异常!异常信息->{}", tableName, ex);
         }
 
         return ResultUtil.success(dataMap);
+    }
+
+    /**
+     * 获取指定行数据
+     *
+     * @param tableName
+     * @param rowKey
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(path = "/selectRow/{tableName}/{rowKey}")
+    @ApiOperation("获取指定行数据")
+    public Result<String> selectRow(@PathVariable String tableName, @PathVariable String rowKey) throws Exception {
+        String value = hBaseService.selectRow(tableName, rowKey);
+        logger.info("获取到HBase->表{} ,行{}的内容：\n{}", tableName, rowKey, value);
+        return ResultUtil.success(value);
+    }
+
+    /**
+     * 获取指定版本的列数据记录
+     *
+     * @param tableName
+     * @param rowKey
+     * @param columnFamily
+     * @param column
+     * @param maxVersions
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(path = "/selectColumn")
+    @ApiOperation("获取指定版本的列数据记录")
+    public Result<String> selectValue(@RequestParam String tableName, @RequestParam String rowKey, @RequestParam String columnFamily,
+                                      @RequestParam String column, @RequestParam int maxVersions) throws Exception {
+        String value = hBaseService.selectValue(tableName, rowKey, columnFamily, column, maxVersions);
+        return ResultUtil.success(value);
     }
 
     /**
@@ -81,13 +142,13 @@ public class UserController {
      * @return
      */
     @DeleteMapping(path = "/delete")
-    @ApiOperation("deleteRow")
+    @ApiOperation("删除数据行")
     public Result<String> deleteRow(@RequestParam(value = "tableName") String tableName, String row) {
         try {
             //删除表行
             hBaseService.deleteRow(tableName, row);
         } catch (Exception ex) {
-            logger.error("获取HBase表{}的内容异常!异常信息->{}", tableName, ex.getMessage());
+            logger.error("获取HBase表{}的内容异常!异常信息->{}", tableName, ex);
             return ResultUtil.failure(ex.getMessage(), tableName);
         }
 

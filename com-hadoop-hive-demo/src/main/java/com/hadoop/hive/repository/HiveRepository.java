@@ -5,6 +5,7 @@ import com.hadoop.hive.entity.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -24,14 +25,23 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
 
     /**
      * 获取hive数据库数据信息
+     * SQL指令必须要有列，不可以select * from .....，否则BeanPropertyRowMapper无法映射到类对象中。
      *
-     * @param sql HiveQL
+     * @param sql HiveQL select id,name,score,age from student
      * @return
      */
     @LogAspect(value = "getLimitOne")
     public Student getLimitOne(String sql) {
         logger.info("HiveQL-->{}", sql);
-        return this.getJdbcTemplate().queryForObject(sql, Student.class);
+        //jdbcTemplate.queryForObject(sql, requiredType) 中的requiredType应该为基础类型，和String类型.
+        //return this.getJdbcTemplate().queryForObject(sql, Student.class);
+
+        //如果想查真正的object应该为
+        List<Student> studentList = this.getJdbcTemplate().query(sql, new Object[]{}, new BeanPropertyRowMapper<>(Student.class));
+        if (studentList.size() > 0) {
+            return studentList.get(0);
+        }
+        return null;
     }
 
     /**
@@ -48,12 +58,16 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
     /**
      * 获取数据列表
      *
-     * @param sql
+     * @param sql SQL指令必须要有列，且列名必须和对象中的属性保持一致，不可以select * from .....，否则BeanPropertyRowMapper无法映射到类对象中。
      * @return
      */
     @LogAspect(value = "getListForObject")
     public List<Student> getListForObject(String sql) {
-        return this.getJdbcTemplate().queryForList(sql, Student.class);
+        //jdbcTemplate.queryForList(sql, requiredType) 中的requiredType应该为基础类型，和String类型.
+        //return this.getJdbcTemplate().queryForList(sql, Student.class);
+
+        //如果想查真正的object应该为
+        return this.getJdbcTemplate().query(sql, new Object[]{}, new BeanPropertyRowMapper<>(Student.class));
     }
 
     /**
