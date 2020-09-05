@@ -1,31 +1,3 @@
-#日志配置文件
-logging:
-  config: classpath:logback-spring.xml
-#服务器端口号
-server:
-  port: 8089
-
-#配置hive数据源
 spring:
-  datasource:
-    hive: #hive数据源  一定要在hive服务上启动hiveserver2服务
-      url: jdbc:hive2://10.1.2.168:10000/demo_database_hive
-      type: com.alibaba.druid.pool.DruidDataSource
-      username: hive
-      password: hive
-      driver-class-name: org.apache.hive.jdbc.HiveDriver
-    pool: #连接池统一配置，应用到所有的数据源
-      initial-size: 1
-      min-idle: 1
-      max-idle: 5
-      max-active: 50
-      max-wait: 10000 # 配置获取连接等待超时的时间
-      time-between-eviction-runs-millis: 10000 # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-      min-evictable-idle-time-millis: 300000 # 配置一个连接在池中最小生存的时间，单位是毫秒
-      validation-query: select 'x'
-      test-while-idle: true
-      test-on-borrow: false
-      test-on-return: false
-      pool-prepared-statements: true  # 打开PSCache，并且指定每个连接上PSCache的大小
-      max-pool-prepared-statement-per-connection-size: 20
-      filters: stat
+  profiles:
+    active: dev

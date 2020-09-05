@@ -45,8 +45,9 @@ public class LogAspect {
         String[] parameterNames = signature.getParameterNames();
 
         if (logAspect != null && logAspect.isWriteLog()) {
-            log.info("方法参数名称 -> " + Arrays.toString(parameterNames));
-            log.info("方法参数值 -> " + Arrays.toString(joinPoint.getArgs()));
+            log.info("方法名称 -> " + logAspect.value());
+            log.info("参数名称 -> " + Arrays.toString(parameterNames));
+            log.info("参数值 -> " + Arrays.toString(joinPoint.getArgs()));
         }
 
         log.info("-------- 结束 AOP 日志切面处理 ------- 耗时：" + (System.currentTimeMillis() - beginTime));

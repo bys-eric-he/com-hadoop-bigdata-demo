@@ -1,12 +1,16 @@
 package com.hadoop.hive.repository;
 
 import com.hadoop.hive.annotation.LogAspect;
+import com.hadoop.hive.entity.Employee;
+import com.hadoop.hive.entity.EmployeeComplexStructure;
 import com.hadoop.hive.entity.Student;
 import com.hadoop.hive.entity.StudentHobby;
+import com.hadoop.hive.entity.database.TableInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -38,7 +42,7 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
         //return this.getJdbcTemplate().queryForObject(sql, Student.class);
 
         //如果想查真正的object应该为
-        List<Student> studentList = this.getJdbcTemplate().query(sql, new Object[]{}, new BeanPropertyRowMapper<>(Student.class));
+        List<Student> studentList = this.getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(Student.class));
         if (studentList.size() > 0) {
             return studentList.get(0);
         }
@@ -68,7 +72,7 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
         //return this.getJdbcTemplate().queryForList(sql, Student.class);
 
         //如果想查真正的object应该为
-        return this.getJdbcTemplate().query(sql, new Object[]{}, new BeanPropertyRowMapper<>(Student.class));
+        return this.getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(Student.class));
     }
 
     /**
@@ -79,7 +83,56 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
      */
     @LogAspect(value = "getListStudentHobby")
     public List<StudentHobby> getListStudentHobby(String sql) {
-        return this.getJdbcTemplate().query(sql, new Object[]{}, new BeanPropertyRowMapper<>(StudentHobby.class));
+        return this.getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(StudentHobby.class));
+    }
+
+    /**
+     * 获取员工列表
+     *
+     * @param sql
+     * @return
+     */
+    @LogAspect(value = "getListEmployee")
+    public List<Employee> getListEmployee(String sql) {
+        return this.getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(Employee.class));
+    }
+
+    /**
+     * 获取复杂员工列表
+     *
+     * @param sql
+     * @return
+     */
+    @LogAspect(value = "getListEmployeeComplexStructure")
+    public List<EmployeeComplexStructure> getListEmployeeComplexStructure(String sql) {
+        return this.getJdbcTemplate().query(sql, new BeanPropertyRowMapper<>(EmployeeComplexStructure.class));
+    }
+
+    /**
+     * 获取指定条件复杂员工列表
+     *
+     * @param sql
+     * @param name
+     * @param city
+     * @return
+     */
+    @LogAspect(value = "getListEmployeeComplexStructureByParam")
+    public List<EmployeeComplexStructure> getListEmployeeComplexStructureByParam(String sql, String name, String city) {
+
+        RowMapper<EmployeeComplexStructure> rm = BeanPropertyRowMapper.newInstance(EmployeeComplexStructure.class);
+        List<Object> queryList = new ArrayList<>();
+        if (null != name && !name.equals("")) {
+            sql += " and name like ? ";
+            queryList.add("%" + name + "%");
+        }
+        if (null != city && !city.equals("")) {
+            sql += " and address.city like ? ";
+            queryList.add("%" + city + "%");
+        }
+        // 使用动态参数agrs[]查询时，会抛DruidPooledPreparedStatement  : getMaxFieldSize error
+        // java.sql.SQLFeatureNotSupportedException: Method not supported 异常
+        // 如果直接将参数拼接到 sql字符串中则不会抛此异常
+        return this.getJdbcTemplate().query(sql, queryList.toArray(), rm);
     }
 
     /**
@@ -191,7 +244,36 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
     }
 
     /**
+     * 获取表结构详细信息
+     *
+     * @param tableName 表名
+     * @return
+     */
+    public List<TableInfo> describeTableInfo(String tableName) throws SQLException {
+        List<TableInfo> tableInfoList = new ArrayList<>();
+
+        Statement statement = this.getJdbcDataSource().getConnection().createStatement();
+        String sql = "describe " + tableName;
+        logger.info("-->Running: " + sql);
+        ResultSet res = statement.executeQuery(sql);
+
+        while (res.next()) {
+            TableInfo tableInfo = new TableInfo();
+            tableInfo.setColumnName(res.getString(1));
+            tableInfo.setColumnType(res.getString(2));
+            tableInfo.setColumnComment(res.getString(3));
+            tableInfoList.add(tableInfo);
+        }
+
+        return tableInfoList;
+    }
+
+    /**
      * 查询指定tableName表中的数据
+     *
+     * @param tableName 表名
+     * @return
+     * @throws SQLException
      */
     public List<String> selectFromTable(String tableName) throws SQLException {
         Statement statement = this.getJdbcDataSource().getConnection().createStatement();
@@ -200,9 +282,9 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
         ResultSet res = statement.executeQuery(sql);
         List<String> list = new ArrayList<>();
         int count = res.getMetaData().getColumnCount();
-        StringBuilder str = null;
+
         while (res.next()) {
-            str = new StringBuilder();
+            StringBuilder str = new StringBuilder();
             for (int i = 1; i < count; i++) {
                 str.append(res.getString(i)).append(" ");
             }
