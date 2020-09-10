@@ -40,7 +40,7 @@ public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritabl
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
         //将读取的一行文本转化为Java的字符串类型
         String line = value.toString();
-        log.info("读取文件行内容-->{}", line);
+        log.info("----------读取文件行内容------------\n{}", line);
         //按照空格符切分出一行字符串中包含的所有单词，并存储到字符串数组中
         String[] words = line.split(" ");
 
@@ -48,7 +48,8 @@ public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritabl
             word.set(w);
             //经过处理形成key-value键值对,输出到MapReduce的上下文，由MapReduce的上下文将结果写入本地磁盘空间
             context.write(word, one);
+            log.info("----------- word:{} one:{} ----------", word.toString(), one.get());
         }
-        log.info("-----------WordCountReducer->map方法执行完毕----------");
+        log.info("-----------WordCountMapper->map方法执行完毕----------");
     }
 }

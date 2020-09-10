@@ -36,6 +36,6 @@ public class FriendsReducer extends Reducer<Text, Text, Text, Text> {
         k.set(key);
         v.set(sb.toString());
         context.write(k, v);
-        log.info("共同好友数据信息,键->{},值->{}", key.toString(), sb.toString());
+        log.info("---->共同好友数据信息,用户->{},同时存在->{} 好友列表中！", key.toString(), sb.toString());
     }
 }

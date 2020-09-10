@@ -37,7 +37,7 @@ public class FriendsMapper extends Mapper<LongWritable, Text, Text, Text> {
         String friends = personFriends[1];
         // 好友根据逗号拆分
         String[] friendsList = friends.split(",");
-        log.info("好友数据信息,用户->{},好友->{}", person, friends);
+        log.info("----->好友数据信息,用户->{},好友->{}", person, friends);
         for (String friend : friendsList) {
             k.set(friend);
             v.set(person);

@@ -39,9 +39,11 @@ public class WordCountReducer extends Reducer<Text, IntWritable, Text, IntWritab
 
         for (IntWritable v : values) {
             sum += v.get();
+            log.info("******* 单词:{} 次数:{} *******", key, v.get());
         }
         //将reduce处理完的结果输出到HDFS文件系统中
         context.write(key, new IntWritable(sum));
-        log.info("-----------WordCountReducer->reduce方法执行完毕----------");
+
+        log.info("-----------单词:{} 总计次数:{}----------", key, sum);
     }
 }

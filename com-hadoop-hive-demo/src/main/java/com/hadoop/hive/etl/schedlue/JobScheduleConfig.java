@@ -50,7 +50,7 @@ public class JobScheduleConfig {
      * WeatherJob 每30秒触发任务
      */
     @Scheduled(cron = "15 * * * * ?")
-    public void jobWordsExecute() {
+    public void jobWeatherExecute() {
         ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
         cachedThreadPool.execute(() -> {
             try {

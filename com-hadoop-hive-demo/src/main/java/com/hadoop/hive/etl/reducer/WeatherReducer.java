@@ -24,19 +24,15 @@ public class WeatherReducer extends MapReduceBase implements Reducer<Text, LongW
                        Reporter reporter) throws IOException {
         long maxValue = Integer.MIN_VALUE;
         StringBuilder sb = new StringBuilder();
-
         // 取values温度的最大值
         while (values.hasNext()) {
             long tmp = values.next().get();
             maxValue = Math.max(maxValue, tmp);
             sb.append(tmp).append(", ");
 
-            output.collect(key, new LongWritable(maxValue));
         }
-
-        // 打印输入样本，如 2000， 15 ，99， 12
-        log.info("==== Before Reduce ==== {}, {}", key, sb.toString());
-        // 打印输出样本
-        log.info("==== After Reduce ==== {}, {}", key, sb.toString());
+        log.info("==== 全年气温列表 ==== {}, {}", key, sb.toString());
+        log.info("----年份：{}，最高温度：{} ----", key, maxValue);
+        output.collect(key, new LongWritable(maxValue));
     }
 }

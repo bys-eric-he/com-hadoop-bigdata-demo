@@ -18,13 +18,13 @@ import java.io.IOException;
 @Component
 public class WeatherMapper extends MapReduceBase implements Mapper<LongWritable, Text, Text, LongWritable> {
 
-    private Text word = new Text();
+    private final Text word = new Text();
 
     @Override
     public void map(LongWritable key, Text value, OutputCollector<Text, LongWritable> output, Reporter reporter)
             throws IOException {
         // 打印输入样本 如 2018120715
-        log.info("==== Before Mapper: ===={},", value);
+        log.info("==== Before Mapper: ===={}", value);
         String line = value.toString();
         // 截取年份
         String year = line.substring(0, 4);
