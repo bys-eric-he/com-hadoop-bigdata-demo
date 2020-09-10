@@ -16,6 +16,8 @@ import java.util.Map;
 public class DataSourceProperties {
     final static String DS = "spring.datasource";
 
+    private Map<String,String> hdfs;
+
     private Map<String,String> hive;
 
     private Map<String,String> pool;

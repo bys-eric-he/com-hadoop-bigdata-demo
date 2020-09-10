@@ -33,6 +33,8 @@
         <module>com-hadoop-hive-demo</module>
         <module>com-hadoop-elasticsearch-demo</module>
         <module>com-hadoop-web-demo</module>
+        <module>com-hadoop-spark-demo</module>
+        <module>com-hadoop-flink-demo</module>
     </modules>
 
     <build>

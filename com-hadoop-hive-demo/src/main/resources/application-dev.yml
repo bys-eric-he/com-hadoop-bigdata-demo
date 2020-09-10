@@ -9,6 +9,10 @@ server:
 #配置hive数据源
 spring:
   datasource:
+    hdfs: #hdfs数据源 对应的是/etc/hadoop目录下的core-site.xml文件中的配置
+      name: fs.defaultFS
+      url: hdfs://e071096005c4:9000
+      user: root
     hive: #hive数据源  一定要在hive服务上启动hiveserver2服务
       url: jdbc:hive2://10.1.2.168:10000/demo_database_enterprise
       type: com.alibaba.druid.pool.DruidDataSource
