@@ -1,5 +1,6 @@
-package com.hadoop.hive.entity;
+package com.hadoop.hive.entity.employee;
 
+import com.hadoop.hive.entity.BaseInfo;
 import lombok.Data;
 
 @Data

@@ -1,4 +1,4 @@
-package com.hadoop.hive.entity;
+package com.hadoop.hive.entity.employee;
 
 import lombok.Data;
 

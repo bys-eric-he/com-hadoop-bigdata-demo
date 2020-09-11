@@ -1,4 +1,4 @@
-package com.hadoop.hive.entity;
+package com.hadoop.hive.entity.student;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

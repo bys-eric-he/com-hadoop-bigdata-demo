@@ -2,20 +2,13 @@ package com.hadoop.hive.controller;
 
 import com.hadoop.hive.common.Result;
 import com.hadoop.hive.common.ResultUtil;
-import com.hadoop.hive.entity.Employee;
-import com.hadoop.hive.entity.EmployeeComplexStructure;
-import com.hadoop.hive.entity.Student;
-import com.hadoop.hive.entity.StudentHobby;
 import com.hadoop.hive.entity.database.TableInfo;
 import com.hadoop.hive.repository.HiveRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,64 +26,6 @@ public class HiveController {
         List<Map<String, Object>> list = hiveRepository.queryForList(sql);
 
         return ResultUtil.success(list);
-    }
-
-    @ApiOperation("获取指定id记录")
-    @RequestMapping(path = "/get", method = RequestMethod.GET)
-    public Result<Student> getLimitOne(@RequestParam String id) {
-        String sql = "select id,name,score,age from student where id ='" + id + "'";
-        Student result = hiveRepository.getLimitOne(sql);
-        return ResultUtil.success(result);
-    }
-
-    /**
-     * 获取学生记录
-     *
-     * @return
-     */
-    @ApiOperation("获取学生记录")
-    @RequestMapping(path = "/listForObject", method = RequestMethod.GET)
-    public Result<List<Student>> getListForObject() {
-        String sql = "select id,name,score,age from student";
-        List<Student> result = hiveRepository.getListForObject(sql);
-        return ResultUtil.success(result);
-    }
-
-    /**
-     * 获取学生爱好记录
-     *
-     * @return
-     */
-    @ApiOperation("获取学生爱好记录")
-    @RequestMapping(path = "/listStudentHobbyForObject", method = RequestMethod.GET)
-    public Result<List<StudentHobby>> getListStudentHobby() {
-        String sql = "select id,name,hobby,add from student";
-        List<StudentHobby> result = hiveRepository.getListStudentHobby(sql);
-        return ResultUtil.success(result);
-    }
-
-    @ApiOperation("获取员工记录")
-    @RequestMapping(path = "/listEmployeeForObject", method = RequestMethod.GET)
-    public Result<List<Employee>> getListEmployee() {
-        String sql = "select id,info from employee";
-        List<Employee> result = hiveRepository.getListEmployee(sql);
-        return ResultUtil.success(result);
-    }
-
-    @ApiOperation("获取复杂员工记录")
-    @RequestMapping(path = "/listEmployeeComplexStructureForObject", method = RequestMethod.GET)
-    public Result<List<EmployeeComplexStructure>> getListEmployeeComplexStructure() {
-        String sql = "select name,sa1ary,subordinates,deductions,address from employee_complex_structure";
-        List<EmployeeComplexStructure> result = hiveRepository.getListEmployeeComplexStructure(sql);
-        return ResultUtil.success(result);
-    }
-
-    @ApiOperation("查询指定条件复杂员工记录")
-    @RequestMapping(path = "/listEmployeeComplexStructureForObjectByParam", method = RequestMethod.POST)
-    public Result<List<EmployeeComplexStructure>> getListEmployeeComplexStructureByParam(String name, String city) {
-        String sql = "select name,sa1ary,subordinates,deductions,address from employee_complex_structure where 1=1 ";
-        List<EmployeeComplexStructure> result = hiveRepository.getListEmployeeComplexStructureByParam(sql, name, city);
-        return ResultUtil.success(result);
     }
 
     /**

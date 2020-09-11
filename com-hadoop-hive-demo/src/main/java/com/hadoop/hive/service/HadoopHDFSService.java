@@ -188,7 +188,9 @@ public class HadoopHDFSService {
     }
 
     /**
-     * @param path 显示HDFS目录及文件列表
+     * 显示HDFS目录及文件列表
+     *
+     * @param path 目录路径
      */
     public void showFiles(String path) {
         FileSystem fileSystem = null;

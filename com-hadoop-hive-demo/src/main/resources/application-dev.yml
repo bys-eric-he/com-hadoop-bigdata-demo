@@ -14,7 +14,7 @@ spring:
       url: hdfs://e071096005c4:9000
       user: root
     hive: #hive数据源  一定要在hive服务上启动hiveserver2服务
-      url: jdbc:hive2://10.1.2.168:10000/demo_database_enterprise
+      url: jdbc:hive2://e071096005c4:10000/demo_database_enterprise
       type: com.alibaba.druid.pool.DruidDataSource
       username: hive
       password: hive
