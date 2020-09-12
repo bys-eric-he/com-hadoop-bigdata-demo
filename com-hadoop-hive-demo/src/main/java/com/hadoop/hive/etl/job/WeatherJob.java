@@ -51,7 +51,6 @@ public class WeatherJob {
         return jobConf;
     }
 
-
     /**
      * 统计数据文件的共同好友
      *
@@ -71,6 +70,8 @@ public class WeatherJob {
         FileInputFormat.setInputPaths(jobConf, new Path(inputPath));
         FileOutputFormat.setOutputPath(jobConf, new Path(outputPath));
         log.info("--->开始执行 WeatherJob......");
+        //runJob(JobConf job)阻塞（同步）方式提交MapReduce作业后立即返回
+        //submitJob(JobConf job)非阻塞（异步）方式提交MapReduce作业后立即返回
         JobClient.runJob(jobConf);
         log.info("----Weather Job Finished----");
     }
