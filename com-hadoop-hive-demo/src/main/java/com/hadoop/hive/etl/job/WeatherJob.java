@@ -38,6 +38,8 @@ public class WeatherJob {
      * @return
      */
     public JobConf getWeatherJobsConf(String jobName) {
+        //JobConf代表一个Map/Reduce作业的配置。
+        //是用户向Hadoop框架描述一个Map/Reduce作业如何执行的主要接口，框架会按照JobConf描述的信息忠实地去尝试完成这个作业。
         JobConf jobConf = new JobConf(hadoopHDFSService.getConfiguration());
         jobConf.setJobName(jobName);
         jobConf.setOutputKeyClass(Text.class);
@@ -68,7 +70,8 @@ public class WeatherJob {
         JobConf jobConf = getWeatherJobsConf(jobName);
         FileInputFormat.setInputPaths(jobConf, new Path(inputPath));
         FileOutputFormat.setOutputPath(jobConf, new Path(outputPath));
-        log.info("-->开始执行 WeatherJob......");
+        log.info("--->开始执行 WeatherJob......");
         JobClient.runJob(jobConf);
+        log.info("----Weather Job Finished----");
     }
 }

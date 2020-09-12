@@ -78,8 +78,9 @@ public class WordCountJob {
 
         //设置job计算结果的输出路径
         FileOutputFormat.setOutputPath(job, new Path(outputPath));
-        log.info("-->开始执行 WordCount Job......");
+        log.info("--->开始执行 WordCount Job......");
         //参数true表示将运行进度等信息及时输出给用户，false的话只是等待作业结束
         job.waitForCompletion(true);
+        log.info("----WordCount Job Finished----");
     }
 }

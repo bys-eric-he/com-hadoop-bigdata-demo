@@ -23,8 +23,8 @@ public class WeatherMapper extends MapReduceBase implements Mapper<LongWritable,
     @Override
     public void map(LongWritable key, Text value, OutputCollector<Text, LongWritable> output, Reporter reporter)
             throws IOException {
-        // 打印输入样本 如 2018120715
-        log.info("==== Before Mapper: ===={}", value);
+        // 打印输入样本: ==== Before Mapper: ==== 0,2018120715
+        log.info("==== Before Mapper: ==== {},{}", key, value);
         String line = value.toString();
         // 截取年份
         String year = line.substring(0, 4);
@@ -33,7 +33,7 @@ public class WeatherMapper extends MapReduceBase implements Mapper<LongWritable,
         word.set(year);
         output.collect(word, new LongWritable(temperature));
 
-        // 打印输出样本
+        // 打印输出样本: ==== After Mapper: ==== 2000, 15
         log.info("==== After Mapper: ==== {},{}", new Text(year), new LongWritable(temperature));
     }
 

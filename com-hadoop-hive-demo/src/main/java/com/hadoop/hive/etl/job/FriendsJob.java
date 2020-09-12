@@ -74,8 +74,9 @@ public class FriendsJob {
         // 指定输入输出文件的位置
         FileInputFormat.setInputPaths(job, new Path(inputPath));
         FileOutputFormat.setOutputPath(job, new Path(outputPath));
-        log.info("-->开始执行 FriendsJob......");
+        log.info("--->开始执行 FriendsJob......");
         job.waitForCompletion(true);
+        log.info("----Friends Job Finished----");
 
     }
 }

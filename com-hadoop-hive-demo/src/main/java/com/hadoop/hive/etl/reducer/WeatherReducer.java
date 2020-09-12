@@ -31,7 +31,9 @@ public class WeatherReducer extends MapReduceBase implements Reducer<Text, LongW
             sb.append(tmp).append(", ");
 
         }
+        // 打印样本： ==== 全年气温列表 ==== 2020, 15, 23, 99, 12, 22
         log.info("==== 全年气温列表 ==== {}, {}", key, sb.toString());
+        // 打印样本： ----年份：2020，最高温度：99 ----
         log.info("----年份：{}，最高温度：{} ----", key, maxValue);
         output.collect(key, new LongWritable(maxValue));
     }

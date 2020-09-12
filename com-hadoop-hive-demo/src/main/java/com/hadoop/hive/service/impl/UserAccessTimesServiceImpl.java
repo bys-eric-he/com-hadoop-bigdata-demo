@@ -1,6 +1,5 @@
 package com.hadoop.hive.service.impl;
 
-import com.hadoop.hive.annotation.LogAspect;
 import com.hadoop.hive.entity.user.UserAccessTimes;
 import com.hadoop.hive.repository.UserAccessTimesRepository;
 import com.hadoop.hive.service.UserAccessTimesService;
