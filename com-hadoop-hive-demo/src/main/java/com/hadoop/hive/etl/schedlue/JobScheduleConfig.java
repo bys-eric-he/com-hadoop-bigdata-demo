@@ -30,7 +30,7 @@ public class JobScheduleConfig {
     /**
      * WordCountJob 每30秒触发任务
      */
-    @Scheduled(cron = "20 * * * * ?")
+    @Scheduled(cron = "0/20 * * * * ?")
     public void jobWordCountExecute() {
         ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
         cachedThreadPool.execute(() -> {
@@ -49,7 +49,7 @@ public class JobScheduleConfig {
     /**
      * WeatherJob 每30秒触发任务
      */
-    @Scheduled(cron = "15 * * * * ?")
+    @Scheduled(cron = "0/15 * * * * ?")
     public void jobWeatherExecute() {
         ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
         cachedThreadPool.execute(() -> {
@@ -68,7 +68,7 @@ public class JobScheduleConfig {
     /**
      * FriendsJob 每30秒触发任务
      */
-    @Scheduled(cron = "10 * * * * ?")
+    @Scheduled(cron = "0/10 * * * * ? ")
     public void jobFriendsExecute() {
         ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
         cachedThreadPool.execute(() -> {

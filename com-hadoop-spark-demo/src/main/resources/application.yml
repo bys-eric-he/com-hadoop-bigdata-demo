@@ -1,0 +1,12 @@
+#应用名
+spring:
+  application:
+    name: springboot-bigdata-spark
+#端口号
+server:
+  port: 8081
+#sparkconfig配置
+spark:
+  app-name:  ${spring.application.name}
+  master: "local[*]" #spark://10.1.2.237:7077 连接不上
+  spark-home: "/usr/local/spark-1.1.1-bin-hadoop2.4/bin"
