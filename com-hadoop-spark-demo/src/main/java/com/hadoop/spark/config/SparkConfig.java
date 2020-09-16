@@ -33,7 +33,7 @@ public class SparkConfig {
     private SparkConf sparkConf;
 
     @Bean
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(JavaSparkContext.class)
     public JavaSparkContext javaSparkContext() {
         return new JavaSparkContext(sparkConf);
     }
@@ -42,6 +42,7 @@ public class SparkConfig {
     private JavaSparkContext javaSparkContext;
 
     @Bean
+    @ConditionalOnMissingBean(SparkSession.class)
     public SparkSession sqlContext() {
         return new SparkSession(javaSparkContext.sc());
     }
@@ -52,7 +53,7 @@ public class SparkConfig {
      * @return
      */
     @Bean
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(HiveContext.class)
     public HiveContext hiveContext() {
         return new HiveContext(javaSparkContext());
     }

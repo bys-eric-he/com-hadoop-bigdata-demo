@@ -6,6 +6,7 @@ import org.apache.hadoop.fs.Path;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -46,6 +47,22 @@ public class SparkJobUtil {
             e.printStackTrace();
         } finally {
             closeQuietly(fileSystem);
+        }
+    }
+
+    /**
+     * 判断文件夹是否存在，存在则删除。
+     *
+     * @param path
+     */
+    public static void judeDirExists(String path) {
+        File file = new File(path);
+        if (file.exists()) {
+            if (file.isDirectory()) {
+                LOGGER.warn("------dir exists-------");
+                file.delete();
+                LOGGER.warn("------DIR DELETED-------");
+            }
         }
     }
 }

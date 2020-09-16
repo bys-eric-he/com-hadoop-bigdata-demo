@@ -1,7 +1,7 @@
 package com.hadoop.spark.job.streaming;
 
 import com.hadoop.spark.job.AbstractSparkJob;
-import org.apache.spark.SparkConf;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.api.java.function.FlatMapFunction;
 import org.apache.spark.api.java.function.Function2;
@@ -11,7 +11,6 @@ import org.apache.spark.streaming.api.java.JavaDStream;
 import org.apache.spark.streaming.api.java.JavaPairDStream;
 import org.apache.spark.streaming.api.java.JavaReceiverInputDStream;
 import org.apache.spark.streaming.api.java.JavaStreamingContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import scala.Tuple2;
 
@@ -24,16 +23,16 @@ import java.util.Iterator;
  * 并且可以使用与高级别功能表达复杂的算法来处理map，reduce，join和window。
  * 最后，处理后的数据可以推送到文件系统，数据库和实时仪表看板。
  */
+@Slf4j
 @Component
 public class WordCountSocketJob extends AbstractSparkJob {
 
-    @Autowired
-    private SparkConf sparkConf;
-
     @Override
     protected void execute(JavaSparkContext sparkContext, String[] args) {
+
+        log.info("----------------开始执行 WordCountSocketJob -------------------");
         //获得JavaStreamingContext
-        JavaStreamingContext ssc = new JavaStreamingContext(sparkConf, Durations.seconds(3));
+        JavaStreamingContext ssc = new JavaStreamingContext(sparkContext, Durations.seconds(3));
 
         //从socket源获取数据
         JavaReceiverInputDStream<String> lines = ssc.socketTextStream(args[1], Integer.parseInt(args[2]));

@@ -29,7 +29,7 @@ public class ETLService {
         // 落地表配置
         Properties local = mySQLConfig.getConnectionProperties();
 
-        writeLive(prod, local, session);
+        //writeLive(prod, local, session);
     }
 
     private void writeLive(Properties prod, Properties local, SparkSession session) {

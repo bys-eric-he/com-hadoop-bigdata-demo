@@ -1,5 +1,6 @@
 package com.hadoop.spark.job;
 
+import com.hadoop.spark.job.utils.SparkJobUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.mortbay.util.ajax.JSON;
@@ -16,6 +17,7 @@ public class WordCountJob extends AbstractSparkJob {
     @Override
     protected void execute(JavaSparkContext sparkContext, String[] args) {
         //args[1] 文件路径, 读取文件wordcount后输出
+        log.info("----------------开始执行 WordCountJob -------------------");
         List<Tuple2<Integer, String>> topK = sparkContext.textFile(args[1])
                 .flatMap(str -> Arrays.asList(str.split("\n| ")).iterator())
                 .mapToPair(word -> new Tuple2<>(word, 1))
@@ -26,10 +28,12 @@ public class WordCountJob extends AbstractSparkJob {
                 .sortByKey(false)
                 .take(10);
         for (Tuple2<Integer, String> tuple2 : topK) {
-            log.info("--Word-->{}",JSON.toString(tuple2));
+            log.info("------>Word<----{}", JSON.toString(tuple2));
         }
 
+        SparkJobUtil.judeDirExists(args[2]);
         //将结果保存到文本文件
         sparkContext.parallelize(topK).coalesce(1).saveAsTextFile(args[2]);
+        log.info("----------------结束执行 WordCountJob -------------------");
     }
 }

@@ -21,12 +21,12 @@ public class SparkSocketServer {
     public static void main(String[] args) {
         try {
             serverSocket = new ServerSocket(port);
-            log.info("---Socket 服务启动，等待连接-----");
+            log.info("---Socket 服务启动:{}，等待连接-----", serverSocket);
             Socket socket = serverSocket.accept();
             log.info("----连接成功，来自：" + socket.getRemoteSocketAddress());
             pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
             int i = 0;
-            while (i < 1000) {
+            while (i < 500) {
                 i++;
                 String str = "spark streaming test " + i;
                 pw.println(str);

@@ -1,13 +1,14 @@
 package com.hadoop.spark.rdd;
 
+import com.hadoop.spark.common.SpringContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import scala.Tuple2;
 
 import java.beans.Transient;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -19,19 +20,22 @@ import java.util.Map;
  */
 @Slf4j
 @Component
-public class ActionRDD {
+public class ActionRDD implements Serializable {
 
     private static final String INPUT_TXT_PATH
             = ActionRDD.class.getClassLoader().getResource("spark_data_demo.txt").toString();
 
-    @Autowired
-    private JavaSparkContext sparkContext;
+    private static ThreadLocal<JavaSparkContext> threadLocal = new ThreadLocal<JavaSparkContext>() {
+        protected JavaSparkContext initialValue() {
+            return SpringContextHolder.getBean(JavaSparkContext.class);
+        }
+    };
 
     /**
      * 聚合（整合数据）
      */
     public void reduce() {
-        JavaRDD<Integer> parallelize = sparkContext.parallelize(Arrays.asList(1, 2, 3, 4), 3);
+        JavaRDD<Integer> parallelize = threadLocal.get().parallelize(Arrays.asList(1, 2, 3, 4), 3);
         Tuple2<Integer, Integer> reduce = parallelize.mapToPair(x -> new Tuple2<>(x, 1))
                 .reduce((x, y) -> getReduce(x, y));
         log.info("-->数组sum:" + reduce._1 + " -->计算次数:" + (reduce._2 - 1));
@@ -59,7 +63,7 @@ public class ActionRDD {
      * 收集所有元素
      */
     public void collect() {
-        JavaRDD<String> stringJavaRDD = sparkContext.textFile(INPUT_TXT_PATH);
+        JavaRDD<String> stringJavaRDD = threadLocal.get().textFile(INPUT_TXT_PATH);
         List<String> collect = stringJavaRDD.collect();
         checkResult(collect);
     }
@@ -68,7 +72,7 @@ public class ActionRDD {
      * 集合里面元素数量
      */
     public void count() {
-        JavaRDD<String> stringJavaRDD = sparkContext.textFile(INPUT_TXT_PATH);
+        JavaRDD<String> stringJavaRDD = threadLocal.get().textFile(INPUT_TXT_PATH);
         long count = stringJavaRDD.count();
         log.info("-->集合里面元素数量:{}", count);
     }
@@ -77,7 +81,7 @@ public class ActionRDD {
      * 取第一个元素
      */
     public void first() {
-        JavaRDD<String> stringJavaRDD = sparkContext.textFile(INPUT_TXT_PATH);
+        JavaRDD<String> stringJavaRDD = threadLocal.get().textFile(INPUT_TXT_PATH);
         String first = stringJavaRDD.first();
         log.info("-->第一个元素:{}", first);
     }
@@ -88,7 +92,7 @@ public class ActionRDD {
      * @param num N的值
      */
     public void take(int num) {
-        JavaRDD<String> stringJavaRDD = sparkContext.textFile(INPUT_TXT_PATH);
+        JavaRDD<String> stringJavaRDD = threadLocal.get().textFile(INPUT_TXT_PATH);
         List<String> take = stringJavaRDD.take(num);
         log.info("-->前{}个数:{}", num, take);
 
@@ -98,7 +102,7 @@ public class ActionRDD {
      * 取Key对应元素数量
      */
     public void countByKey() {
-        JavaRDD<String> stringJavaRDD = sparkContext.textFile(INPUT_TXT_PATH);
+        JavaRDD<String> stringJavaRDD = threadLocal.get().textFile(INPUT_TXT_PATH);
         Map<String, Long> stringLongMap = stringJavaRDD.map(x -> x.split(",")[0])
                 .mapToPair(x -> new Tuple2<>(x, 1))
                 .countByKey();
@@ -112,7 +116,7 @@ public class ActionRDD {
      * 循环
      */
     public void forEach() {
-        JavaRDD<String> stringJavaRDD = sparkContext.textFile(INPUT_TXT_PATH);
+        JavaRDD<String> stringJavaRDD = threadLocal.get().textFile(INPUT_TXT_PATH);
         stringJavaRDD.foreach(x -> {
             log.info("-->循环打印:{}", x);
         });
