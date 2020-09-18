@@ -13,8 +13,10 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class UserOrderProducer {
+
     @Autowired
     private KafkaTemplate kafkaTemplate;
+
     @Autowired
     private KafkaSendResultHandler producerListener;
 
@@ -30,7 +32,7 @@ public class UserOrderProducer {
             //指定在1分区发送内容
             ProducerRecord record = new ProducerRecord(
                     TopicConstant.USER_ORDER_TOPIC_MESSAGE,
-                    TopicConstant.USER_ORDER_KEY_1,
+                    TopicConstant.USER_ORDER_KEY_2,
                     JSON.toJSONString(userOrder));
 
             kafkaTemplate.setProducerListener(producerListener);
