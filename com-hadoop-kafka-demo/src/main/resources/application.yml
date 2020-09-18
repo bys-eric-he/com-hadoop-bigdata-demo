@@ -1,12 +1,12 @@
 spring:
   kafka:
-    bootstrap-servers: 10.1.2.237:9092 #指定kafka server的地址，集群配多个，中间，逗号隔开
+    bootstrap-servers: 10.1.2.237:9092 #指定kafka server的地址，集群可配多个，中间，逗号隔开
     #配置生产者
     producer:
       # 指定消息key和消息体的编解码方式
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      retries: 0  # 写入失败时，重试次数。当leader节点失效，一个repli节点会替代成为leader节点，此时可能出现写入失败。
+      retries: 2  # 失败重试发送的次数,写入失败时，重试次数。当leader节点失效，一个repli节点会替代成为leader节点，此时可能出现写入失败。
                   # 当retris为0时，produce不会重复。retirs重发，此时repli节点完全成为leader节点，不会产生消息丢失。
       batch-size: 16384 # 每次批量发送消息的数量,produce积累到一定数据，一次发送
       buffer-memory: 33554432 # produce积累数据一次发送，缓存大小达到buffer.memory就发送数据
@@ -19,12 +19,13 @@ spring:
     consumer:
       group-id: kafka_consumer_group_demo # 指定默认消费者group id --> 由于在kafka中，同一组中的consumer不会读取到同一个消息，依靠groud.id设置组名
       enable-auto-commit: true # 设置自动提交offset
-      auto-commit-interval: 1000 #如果'enable-auto-commit'为true，则消费者偏移自动提交给Kafka的频率（以毫秒为单位），默认值为5000。
+      auto-commit-interval: 1000 #提交offset时间间隔, 如果'enable-auto-commit'为true，则消费者偏移自动提交给Kafka的频率（以毫秒为单位），默认值为5000。
       # 指定消息key和消息体的编解码方式
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       auto-offset-reset: latest # smallest和largest才有效，如果smallest重新0开始读取，如果是largest从logfile的offset读取。一般情况下我们都是设置smallest
     listener:
-      poll-timeout: 1500                                  #只限自动提交，
+      poll-timeout: 1500   #只限自动提交
+      missing-topics-fatal: false  #消费监听接口监听的主题不存在时，默认会报错因此要关掉这个
 server:
   port: 8500

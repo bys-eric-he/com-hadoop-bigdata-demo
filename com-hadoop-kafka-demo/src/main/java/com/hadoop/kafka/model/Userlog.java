@@ -10,7 +10,7 @@ import lombok.experimental.Accessors;
 @Accessors
 public class Userlog {
     private String username;
-    private String userid;
+    private String userId;
     private String state;
     private String content;
 }

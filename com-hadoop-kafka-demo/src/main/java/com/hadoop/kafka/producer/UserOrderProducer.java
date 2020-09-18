@@ -3,19 +3,16 @@ package com.hadoop.kafka.producer;
 import com.alibaba.fastjson.JSON;
 import com.hadoop.kafka.common.TopicConstant;
 import com.hadoop.kafka.handler.KafkaSendResultHandler;
-import com.hadoop.kafka.model.Userlog;
+import com.hadoop.kafka.model.UserOrder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-/**
- * 用户日志生产者
- */
 @Slf4j
 @Component
-public class UserLogProducer {
+public class UserOrderProducer {
     @Autowired
     private KafkaTemplate kafkaTemplate;
     @Autowired
@@ -24,15 +21,17 @@ public class UserLogProducer {
     /**
      * 发送消息
      *
-     * @param userLog
+     * @param userOrder
      */
-    public void sendlog(Userlog userLog) {
+    public void sendOrder(UserOrder userOrder) {
         try {
-            log.info("---->准备发送用户日志到消息服务：{}", JSON.toJSONString(userLog));
+            log.info("---->准备发送用户订单到消息服务：{}", JSON.toJSONString(userOrder));
 
+            //指定在1分区发送内容
             ProducerRecord record = new ProducerRecord(
-                    TopicConstant.USER_LOG_TOPIC_MESSAGE,
-                    JSON.toJSONString(userLog));
+                    TopicConstant.USER_ORDER_TOPIC_MESSAGE,
+                    TopicConstant.USER_ORDER_KEY_1,
+                    JSON.toJSONString(userOrder));
 
             kafkaTemplate.setProducerListener(producerListener);
             kafkaTemplate.send(record);

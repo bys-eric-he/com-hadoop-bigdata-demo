@@ -17,11 +17,11 @@ public class KafkaSendResultHandler implements ProducerListener {
 
     @Override
     public void onSuccess(ProducerRecord producerRecord, RecordMetadata recordMetadata) {
-        log.info("---->Message send success : " + producerRecord.toString());
+        log.info("---->消息发送成功回调 : " + producerRecord.toString());
     }
 
     @Override
     public void onError(ProducerRecord producerRecord, Exception exception) {
-        log.info("---->Message send error : " + producerRecord.toString());
+        log.info("---->消息发送失败回调 : " + producerRecord.toString());
     }
 }
