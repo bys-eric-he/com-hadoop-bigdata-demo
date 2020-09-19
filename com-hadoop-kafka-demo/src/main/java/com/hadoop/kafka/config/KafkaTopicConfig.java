@@ -1,13 +1,18 @@
 package com.hadoop.kafka.config;
 
 import com.hadoop.kafka.common.TopicConstant;
+import com.hadoop.kafka.factory.KafkaProducerFactory;
+import com.hadoop.kafka.handler.KafkaSendResultHandler;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.KafkaAdmin;
+import org.springframework.kafka.core.KafkaTemplate;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +25,9 @@ public class KafkaTopicConfig {
      */
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
+
+    @Autowired
+    private KafkaProducerFactory kafkaProducerFactory;
 
     /**
      * 创建TopicName为TopicConstant.USER_ORDER_TOPIC_MESSAGE的Topic并设置分区数为8以及副本数为1
@@ -41,7 +49,7 @@ public class KafkaTopicConfig {
      * @return
      */
     @Bean
-    public NewTopic userLogTopic(){
+    public NewTopic userLogTopic() {
         return new NewTopic(TopicConstant.USER_LOG_TOPIC_MESSAGE, 6, (short) 1);
     }
 
@@ -56,5 +64,13 @@ public class KafkaTopicConfig {
     @Bean
     public AdminClient adminClient() {
         return AdminClient.create(kafkaAdmin().getConfig());
+    }
+
+    /**
+     * 获取生产者实例
+     */
+    @Bean("customerKafkaTemplate")
+    public KafkaTemplate<String, ProducerRecord<?, String>> testSender() {
+        return kafkaProducerFactory.kafkaTemplate(null, KafkaSendResultHandler.class);
     }
 }

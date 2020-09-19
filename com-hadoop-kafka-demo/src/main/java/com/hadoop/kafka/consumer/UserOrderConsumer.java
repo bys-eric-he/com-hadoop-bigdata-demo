@@ -64,7 +64,7 @@ public class UserOrderConsumer extends AbstractBaseConsumer {
     protected void call(ConsumerRecord<?, String> consumerRecord) {
         KafkaConsumerResultHandler consumerData = new KafkaConsumerResultHandler(consumerRecord);
         try {
-            String result = (String) consumerData.call();
+            String result = consumerData.call();
             log.info(result);
         } catch (Exception e) {
             e.printStackTrace();

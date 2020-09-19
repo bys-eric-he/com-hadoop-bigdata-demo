@@ -7,7 +7,7 @@ import java.util.concurrent.Callable;
 /**
  * 消息消费回调处理
  */
-public class KafkaConsumerResultHandler implements Callable {
+public class KafkaConsumerResultHandler implements Callable<String> {
     private ConsumerRecord<?, String> record;
 
     public KafkaConsumerResultHandler(ConsumerRecord<?, String> record) {
@@ -21,8 +21,8 @@ public class KafkaConsumerResultHandler implements Callable {
      * @throws Exception if unable to compute a result
      */
     @Override
-    public Object call() throws Exception {
-        return String.format("--->当前线程=%s,主题分区=%s,偏移量=%s,主题=%s,消息内容=%s",
+    public String call() throws Exception {
+        return String.format("--->收到消息：当前线程=%s,主题分区=%s,偏移量=%s,主题=%s,消息内容=%s",
                 Thread.currentThread().getName()
                 , record.partition()
                 , record.offset()

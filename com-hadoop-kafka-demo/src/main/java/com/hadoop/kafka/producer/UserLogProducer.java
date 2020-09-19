@@ -32,7 +32,7 @@ public class UserLogProducer {
 
             // 指定key让kafka自动判断partition
             String key = userLog.getUserId();
-            ProducerRecord record = new ProducerRecord(
+            ProducerRecord<?, String> record = new ProducerRecord<>(
                     TopicConstant.USER_LOG_TOPIC_MESSAGE,
                     key,
                     JSON.toJSONString(userLog));

@@ -37,7 +37,7 @@ public class UserOrderProducer {
             int partitionNum = (hCode & 0x7fffffff) % 8;
 
             // 发送内容
-            ProducerRecord record = new ProducerRecord(
+            ProducerRecord<?, String> record = new ProducerRecord<>(
                     TopicConstant.USER_ORDER_TOPIC_MESSAGE,
                     partitionNum,
                     JSON.toJSONString(userOrder));
