@@ -2,7 +2,7 @@ package com.hadoop.kafka.controller;
 
 import com.hadoop.kafka.common.Result;
 import com.hadoop.kafka.common.ResultUtil;
-import com.hadoop.kafka.model.Userlog;
+import com.hadoop.kafka.model.UserLog;
 import com.hadoop.kafka.producer.UserLogProducer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -21,7 +21,7 @@ public class UserLogController {
 
     @ApiOperation("发送日志到后端")
     @RequestMapping(path = "/send", method = RequestMethod.POST)
-    public Result<Object> getCarCityCountyDistribution(Userlog userlog) {
+    public Result<Object> getCarCityCountyDistribution(UserLog userlog) {
         userLogProducer.sendlog(userlog);
         return ResultUtil.success();
     }

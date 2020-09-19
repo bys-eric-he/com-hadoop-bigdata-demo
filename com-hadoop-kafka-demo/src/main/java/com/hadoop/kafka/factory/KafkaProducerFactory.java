@@ -1,5 +1,6 @@
 package com.hadoop.kafka.factory;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -19,7 +20,8 @@ import java.util.Map;
 /**
  * 生产者工厂
  */
-@Configuration
+@Slf4j
+@Configuration("customerKafkaProducerFactory")
 public class KafkaProducerFactory {
     @Autowired
     private ApplicationContext context;
@@ -36,7 +38,7 @@ public class KafkaProducerFactory {
     /**
      * 失败重试发送的次数
      */
-    @Value("${spring.kafka.producer.retries}")
+    @Value("${spring.kafka.producer.acks}")
     private String acksConfig;
 
     /**
@@ -67,6 +69,8 @@ public class KafkaProducerFactory {
             template.setDefaultTopic(topicName);
         }
         template.setProducerListener((ProducerListener<String, ProducerRecord<?, String>>) context.getBean(clazz));
+
+        log.info("------------------注册自定义生产者例完成----------------");
         return template;
     }
 }

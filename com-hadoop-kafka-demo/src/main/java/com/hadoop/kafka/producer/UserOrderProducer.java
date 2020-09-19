@@ -2,11 +2,11 @@ package com.hadoop.kafka.producer;
 
 import com.alibaba.fastjson.JSON;
 import com.hadoop.kafka.common.TopicConstant;
-import com.hadoop.kafka.handler.KafkaSendResultHandler;
 import com.hadoop.kafka.model.UserOrder;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
@@ -15,10 +15,8 @@ import org.springframework.stereotype.Component;
 public class UserOrderProducer {
 
     @Autowired
+    @Qualifier("customerKafkaTemplate")
     private KafkaTemplate kafkaTemplate;
-
-    @Autowired
-    private KafkaSendResultHandler producerListener;
 
     /**
      * 发送消息
@@ -35,14 +33,14 @@ public class UserOrderProducer {
             // 这里是分8个分片；需要注意的是hashcode有可能为负数；可以通过&操作；
             // 或者直接Math.Abs(hCode%2)也可以
             int partitionNum = (hCode & 0x7fffffff) % 8;
-
+            log.info("---->计算出主题分区是：{}", partitionNum);
             // 发送内容
             ProducerRecord<?, String> record = new ProducerRecord<>(
                     TopicConstant.USER_ORDER_TOPIC_MESSAGE,
                     partitionNum,
+                    key,
                     JSON.toJSONString(userOrder));
 
-            kafkaTemplate.setProducerListener(producerListener);
             kafkaTemplate.send(record);
 
         } catch (Exception ex) {

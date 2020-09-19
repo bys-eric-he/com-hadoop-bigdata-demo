@@ -36,14 +36,4 @@ public class KafkaSendResultHandler implements ProducerListener<String, Producer
     public void onError(ProducerRecord producerRecord, Exception exception) {
         log.info("---->消息发送失败回调 : " + producerRecord.toString());
     }
-
-    /**
-     * 是否开启发送监听
-     *
-     * @return true开启，false关闭
-     */
-    @Override
-    public boolean isInterestedInSuccess() {
-        return true;
-    }
 }

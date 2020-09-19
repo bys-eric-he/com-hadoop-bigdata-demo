@@ -8,6 +8,7 @@ import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class KafkaTopicConfig {
+public class KafkaConfig {
 
     /**
      * 指定kafka server的地址，集群可配多个，中间，逗号隔开
@@ -27,7 +28,8 @@ public class KafkaTopicConfig {
     private String bootstrapServers;
 
     @Autowired
-    private KafkaProducerFactory kafkaProducerFactory;
+    @Qualifier("customerKafkaProducerFactory")
+    private KafkaProducerFactory customerKafkaProducerFactory;
 
     /**
      * 创建TopicName为TopicConstant.USER_ORDER_TOPIC_MESSAGE的Topic并设置分区数为8以及副本数为1
@@ -70,7 +72,7 @@ public class KafkaTopicConfig {
      * 获取生产者实例
      */
     @Bean("customerKafkaTemplate")
-    public KafkaTemplate<String, ProducerRecord<?, String>> testSender() {
-        return kafkaProducerFactory.kafkaTemplate(null, KafkaSendResultHandler.class);
+    public KafkaTemplate<String, ProducerRecord<?, String>> customerKafkaTemplate() {
+        return customerKafkaProducerFactory.kafkaTemplate(null, KafkaSendResultHandler.class);
     }
 }

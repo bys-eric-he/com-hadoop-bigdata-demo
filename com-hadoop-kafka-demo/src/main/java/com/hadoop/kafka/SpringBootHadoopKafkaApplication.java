@@ -48,7 +48,7 @@ public class SpringBootHadoopKafkaApplication {
         log.info("---->创建一个新的主题后的所有消息主题：{}", queryAllTopic1.toString());
 
         //删除已经存在的主题
-        kafkaUtils.deleteTopic("topic-demo-01");
+        kafkaUtils.deleteTopic("user_log_message");
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
