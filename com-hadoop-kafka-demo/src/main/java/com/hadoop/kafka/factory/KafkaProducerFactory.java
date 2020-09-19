@@ -4,9 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -22,24 +19,7 @@ import java.util.Map;
  */
 @Slf4j
 @Configuration("customerKafkaProducerFactory")
-public class KafkaProducerFactory {
-    @Autowired
-    private ApplicationContext context;
-    /**
-     * 指定kafka server的地址，集群可配多个，中间，逗号隔开
-     */
-    @Value("${spring.kafka.bootstrap-servers}")
-    private String bootstrapServersConfig;
-    /**
-     * 失败重试发送的次数
-     */
-    @Value("${spring.kafka.producer.retries}")
-    private Integer retriesConfig;
-    /**
-     * 失败重试发送的次数
-     */
-    @Value("${spring.kafka.producer.acks}")
-    private String acksConfig;
+public class KafkaProducerFactory extends AbstractBaseFactory {
 
     /**
      * 获取生产者工厂
@@ -47,9 +27,9 @@ public class KafkaProducerFactory {
     public ProducerFactory<String, ProducerRecord<?, String>> producerFactory() {
 
         Map<String, Object> props = new HashMap<>();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServersConfig);
-        props.put(ProducerConfig.RETRIES_CONFIG, retriesConfig);
-        props.put(ProducerConfig.ACKS_CONFIG, acksConfig);
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, this.getBootstrapServersConfig());
+        props.put(ProducerConfig.RETRIES_CONFIG, this.getRetriesConfig());
+        props.put(ProducerConfig.ACKS_CONFIG, this.getAcksConfig());
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 
@@ -68,7 +48,7 @@ public class KafkaProducerFactory {
         if (!StringUtils.isEmpty(topicName)) {
             template.setDefaultTopic(topicName);
         }
-        template.setProducerListener((ProducerListener<String, ProducerRecord<?, String>>) context.getBean(clazz));
+        template.setProducerListener((ProducerListener<String, ProducerRecord<?, String>>) this.getContext().getBean(clazz));
 
         log.info("------------------注册自定义生产者例完成----------------");
         return template;

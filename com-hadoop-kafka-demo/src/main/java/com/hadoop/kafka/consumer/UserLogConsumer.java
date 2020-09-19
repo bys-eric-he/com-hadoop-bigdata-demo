@@ -12,11 +12,13 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class UserLogConsumer extends AbstractBaseConsumer {
-    @KafkaListener(topics = "kafka_topic_user_log_message")
+    @KafkaListener(
+            id = "user-log-consumer-one",
+            groupId = "kafka_consumer_group_user_log",
+            topics = "kafka_topic_user_log_message")
     public void consumer(ConsumerRecord<?, String> consumerRecord) {
         super.action(consumerRecord);
     }
-
 
     /**
      * 消费处理

@@ -26,7 +26,7 @@ spring:
       auto-offset-reset: earliest # earliest 在偏移量无效的情况下，消费者将从起始位置读取分区的记录
       properties:
         max.poll.interval.ms: 86400000 #kafka中配置的规定返回消息时间, 默认是300s, 也就是5分钟, 但是有一些业务逻辑处理起来比较复杂, 数据量又比较庞大, 那么5分钟是肯定处理不完的, 比如导入一个5G的文件, 然后逐条插入数据库, 这就需要消耗很长时间, 所以需要设置一下kafka的最大间隔时间
-        max.poll.records: 500
+        max.poll.records: 500 #控制单次调用call方法能够返回的记录数量，帮助控制在轮询里需要处理的数据量
     listener:
       poll-timeout: 1500   #只限自动提交
       missing-topics-fatal: false  #消费监听接口监听的主题不存在时，默认会报错因此要关掉这个

@@ -26,8 +26,8 @@ public class UserOrderConsumer extends AbstractBaseConsumer {
      * @param consumerRecord
      */
     @KafkaListener(
-            id = "consumer-one",
-            groupId = "kafka_consumer_group_demo_one",
+            id = "user-order-consumer-one",
+            groupId = "kafka_consumer_group_user_order",
             topics = "kafka_topic_user_order_message"
     )
     public void consumer_one(ConsumerRecord<?, String> consumerRecord) {
@@ -45,8 +45,8 @@ public class UserOrderConsumer extends AbstractBaseConsumer {
      * @param consumerRecord
      */
     @KafkaListener(
-            id = "consumer-two",
-            groupId = "kafka_consumer_group_demo_one",
+            id = "user-order-consumer-two",
+            groupId = "kafka_consumer_group_user_order",
             topics = "kafka_topic_user_order_message"
     )
     public void consumer_two(ConsumerRecord<?, String> consumerRecord) {

@@ -1,8 +1,10 @@
 package com.hadoop.kafka.config;
 
 import com.hadoop.kafka.common.TopicConstant;
+import com.hadoop.kafka.factory.KafkaConsumerFactory;
 import com.hadoop.kafka.factory.KafkaProducerFactory;
 import com.hadoop.kafka.handler.KafkaSendResultHandler;
+import com.hadoop.kafka.listener.ConsumerListener;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -15,6 +17,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.kafka.core.KafkaTemplate;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,6 +33,10 @@ public class KafkaConfig {
     @Autowired
     @Qualifier("customerKafkaProducerFactory")
     private KafkaProducerFactory customerKafkaProducerFactory;
+
+    @Autowired
+    @Qualifier("customerKafkaConsumerFactory")
+    private KafkaConsumerFactory customerKafkaConsumerFactory;
 
     /**
      * 创建TopicName为TopicConstant.USER_ORDER_TOPIC_MESSAGE的Topic并设置分区数为8以及副本数为1
@@ -75,4 +82,19 @@ public class KafkaConfig {
     public KafkaTemplate<String, ProducerRecord<?, String>> customerKafkaTemplate() {
         return customerKafkaProducerFactory.kafkaTemplate(null, KafkaSendResultHandler.class);
     }
+
+    /**
+     * 在服务器加载Servlet的时候运行，并且只会被服务器调用一次
+     */
+    @PostConstruct
+    public void consumerListener() {
+        customerKafkaConsumerFactory.kafkaListenerContainer(
+                "user-log-consumer-three",
+                "kafka_consumer_group_user_log",
+                ConsumerListener.class,
+                TopicConstant.USER_LOG_TOPIC_MESSAGE,
+                6)
+                .startContainer();
+    }
+
 }
