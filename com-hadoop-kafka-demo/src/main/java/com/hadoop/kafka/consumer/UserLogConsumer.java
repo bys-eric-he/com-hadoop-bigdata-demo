@@ -1,33 +1,37 @@
 package com.hadoop.kafka.consumer;
 
+import com.hadoop.kafka.handler.KafkaConsumerResultHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
 
 /**
  * 日志消费者
  */
 @Slf4j
 @Component
-public class UserLogConsumer {
+public class UserLogConsumer extends AbstractBaseConsumer {
     @KafkaListener(topics = "kafka_topic_user_log_message")
-    public void consumer(ConsumerRecord consumerRecord) {
-        Optional<Object> optionalMessage = Optional.ofNullable(consumerRecord.value());
-        Optional<String> optionalTopic = Optional.ofNullable(consumerRecord.topic());
-        String topic = null;
-        Object message = null;
+    public void consumer(ConsumerRecord<?, String> consumerRecord) {
+        super.action(consumerRecord);
+    }
 
-        if (optionalTopic.isPresent()) {
-            topic = optionalTopic.get();
+
+    /**
+     * 消费处理
+     *
+     * @param consumerRecord
+     * @return
+     */
+    @Override
+    protected void call(ConsumerRecord<?, String> consumerRecord) {
+        KafkaConsumerResultHandler consumerData = new KafkaConsumerResultHandler(consumerRecord);
+        try {
+            String result = (String) consumerData.call();
+            log.info(result);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
-        if (optionalMessage.isPresent()) {
-            message = optionalMessage.get();
-        }
-
-        log.info("-->收到消息 >主题:{},>内容:{}", topic, message);
     }
 }

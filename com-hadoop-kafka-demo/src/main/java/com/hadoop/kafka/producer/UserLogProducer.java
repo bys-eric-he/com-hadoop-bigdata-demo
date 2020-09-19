@@ -30,13 +30,15 @@ public class UserLogProducer {
         try {
             log.info("---->准备发送用户日志到消息服务：{}", JSON.toJSONString(userLog));
 
+            // 指定key让kafka自动判断partition
+            String key = userLog.getUserId();
             ProducerRecord record = new ProducerRecord(
                     TopicConstant.USER_LOG_TOPIC_MESSAGE,
+                    key,
                     JSON.toJSONString(userLog));
 
             kafkaTemplate.setProducerListener(producerListener);
             kafkaTemplate.send(record);
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }
