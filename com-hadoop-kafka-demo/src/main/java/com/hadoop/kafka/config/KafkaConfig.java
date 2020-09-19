@@ -97,4 +97,17 @@ public class KafkaConfig {
                 .startContainer();
     }
 
+    /**
+     * 在服务器加载Servlet的时候运行，并且只会被服务器调用一次
+     */
+    @PostConstruct
+    public void processorListener() {
+        customerKafkaConsumerFactory.kafkaListenerContainer(
+                "user-log-consumer-four",
+                "kafka_consumer_group_user_log",
+                ConsumerListener.class,
+                TopicConstant.USER_LOG_PROCESSOR_TOPIC_TO,
+                6)
+                .startContainer();
+    }
 }

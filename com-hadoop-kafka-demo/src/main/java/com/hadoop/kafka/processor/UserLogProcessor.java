@@ -1,11 +1,13 @@
 package com.hadoop.kafka.processor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.streams.processor.Processor;
 import org.apache.kafka.streams.processor.ProcessorContext;
 
 /**
- * 用户日志流式处理
+ * 具体业务处理
  */
+@Slf4j
 public class UserLogProcessor implements Processor<byte[], byte[]> {
 
     private ProcessorContext context;
@@ -26,13 +28,14 @@ public class UserLogProcessor implements Processor<byte[], byte[]> {
     @Override
     public void process(byte[] key, byte[] value) {
         String input = new String(value);
-
+        log.info("---> 当前from topic的内容: {}",input);
         // 如果包含“>>>”则只保留该标记后面的内容
         if (input.contains(">>>")) {
             input = input.split(">>>")[1].trim();
-            // 输出到下一个topic
         }
-        context.forward("logProcessor".getBytes(), input.getBytes());
+        log.info("---> 输出到下一个to topic的内容: {}",input);
+        // 输出到下一个topic
+        context.forward("userLogProcessor".getBytes(), input.getBytes());
     }
 
     @Override
