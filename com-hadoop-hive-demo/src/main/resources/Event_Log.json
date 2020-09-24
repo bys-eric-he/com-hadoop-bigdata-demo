@@ -1,0 +1,78 @@
+{
+  "cm": {
+    "ln": "-26.5",
+    "sv": "V2.5.7",
+    "os": "14.0",
+    "g": "heyong@gmail.com",
+    "mid": "M00001",
+    "nw": "4G",
+    "l": "pt",
+    "vc": "3",
+    "hw": "560*1023",
+    "ar": "MX",
+    "uid": "2020092400001",
+    "t": "1583707297317",
+    "la": "-42.3",
+    "md": "iPhone",
+    "vn": "Xs",
+    "ba": "Apple",
+    "sr": "V"
+  },
+  "ap": "app ",
+  "et": [{
+    "ett": "1583705574288",
+    "en": "active_background",
+    "kv": {
+      "active_source": "Mobile-App"
+    }
+  }, {
+    "ett": "1583705574227",
+    "en": "praise",
+    "kv": {
+      "id": "20200001",
+      "userid": "2020092400001",
+      "target_id": "T-00001",
+      "type": "T-01",
+      "add_time": "2020-09-24 17:01:00"
+    }
+  }, {
+    "ett": "1583760986260",
+    "en": "comment",
+    "kv": {
+      "comment_id": "1000255563202",
+      "userid": "2020092400001",
+      "p_comment_id": "1100225320004",
+      "content": "I Also Love HIVE AND HBASE !!!!",
+      "addtime": "2020-09-24 16:55:00",
+      "other_id": "110023652200005",
+      "praise_count": "11 ",
+      "reply_count": "22"
+    }
+  }, {
+    "ett": "1583760986259",
+    "en": "comment",
+    "kv": {
+      "comment_id": "1000255563201",
+      "userid": "2020092400001",
+      "p_comment_id": "1100225320003",
+      "content": "I love Hive and HBase !!!!",
+      "addtime": "2020-09-24 16:53:00",
+      "other_id": "110023652200004",
+      "praise_count": "15 ",
+      "reply_count": "28"
+    }
+  }, {
+    "ett": "1583760986261",
+    "en": "comment",
+    "kv": {
+      "comment_id": "1000255563203",
+      "userid": "2020092400001",
+      "p_comment_id": "1100225320005",
+      "content": "I love Kafka and ElasticSearch !!!!",
+      "addtime": "2020-09-24 16:58:00",
+      "other_id": "110023652200006",
+      "praise_count": "9 ",
+      "reply_count": "3"
+    }
+  }]
+}
