@@ -18,7 +18,7 @@ INSERT INTO TABLE ${APP}.ads_silent_count SELECT
 	'$do_date',
 	count(*)
 FROM
-	dwt_uv_topic
+	${APP}.dwt_uv_topic
 WHERE
 	login_date_first = login_date_last
 AND login_date_last <= date_add('$do_date' ,- 7);"

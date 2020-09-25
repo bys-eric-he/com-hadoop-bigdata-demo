@@ -47,13 +47,13 @@ INSERT overwrite TABLE ${APP}.dwt_uv_topic SELECT
 
 IF (
 	old.mid_id IS NULL,
-	$do_date,
+	'$do_date',
 	old.login_date_first
 ),
 
 IF (
 	new.mid_id IS NOT NULL,
-	$do_date,
+	'$do_date',
 	old.login_date_last
 ),
 
@@ -72,7 +72,7 @@ FULL OUTER JOIN (
 	FROM
 		${APP}.dws_uv_detail_daycount
 	WHERE
-		dt = $do_date
+		dt = '$do_date'
 ) new ON old.mid_id = new.mid_id;"
 
 echo "===START to TAKE User Device subject wide table DATA From $do_date ==="

@@ -46,7 +46,7 @@ INSERT INTO TABLE ${APP}.ads_user_retention_day_rate SELECT
 		)
 	) * 100
 FROM
-	${APP}.dwt_uv_topicunion ALL SELECT
+	${APP}.dwt_uv_topic UNION ALL SELECT
 		'$do_date' ,-- 统计日期 date_add('$do_date' ,- 2) ,-- 新增日期 2 ,-- 留存天数
 		sum(
 			IF (
