@@ -1,0 +1,28 @@
+{
+  "mid": "M0001",
+  "uid": "2020092409590001",
+  "vc": "V 2.3.1",
+  "vn": "Beta",
+  "l": "CHN",
+  "sr": "C",
+  "os": "8.6",
+  "ar": "shen zhen",
+  "md": "Plus",
+  "ba": "Apple",
+  "sv": "V 1.5.6",
+  "g": "heyong@gmail.com",
+  "hw": "20*10",
+  "t": "2020-09-25 09:35:00",
+  "nw": "4G",
+  "ln": "-63.8",
+  "la": "-0.69999999",
+  "entry": "App",
+  "open_ad_type": "Web H5",
+  "action": "login",
+  "loading_time": "202009241038521",
+  "detail": "The log info is belongs to user start app....",
+  "extend1": {
+    "data": "START APP LOG",
+    "date": "2020-09-25"
+  }
+}
