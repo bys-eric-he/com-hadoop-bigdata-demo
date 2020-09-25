@@ -31,7 +31,7 @@ FROM
 			mid_id
 		FROM
 			(
-				selectmid_id
+				SELECT mid_id
 				FROM
 					${APP}.dws_uv_detail_daycount
 				WHERE

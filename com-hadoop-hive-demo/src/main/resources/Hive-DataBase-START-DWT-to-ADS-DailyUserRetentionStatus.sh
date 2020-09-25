@@ -14,23 +14,25 @@ fi
 
 sql="
 INSERT INTO TABLE ${APP}.ads_user_retention_day_rate SELECT
-	'$do_date' ,-- 统计日期 date_add('$do_date' ,- 1) ,-- 新增日期 1 ,-- 留存天数 sum(
-
+	'$do_date' ,-- 统计日期
+	date_add('$do_date' ,- 1) ,-- 新增日期
+	1 ,-- 留存天数
+	sum(
 		IF (
 			login_date_first = date_add('$do_date' ,- 1)
 			AND login_date_last = '$do_date',
 			1,
 			0
 		)
-	) ,-- '$do_date' 的 1 日留存数 sum(
-
+	) ,-- '$do_date' 的 1 日留存数
+	sum(
 		IF (
 			login_date_first = date_add('$do_date' ,- 1),
 			1,
 			0
 		)
-	) ,-- '$do_date' 新增 sum(
-
+	) ,-- '$do_date' 新增
+	sum(
 		IF (
 			login_date_first = date_add('$do_date' ,- 1)
 			AND login_date_last = '$do_date',
@@ -47,7 +49,9 @@ INSERT INTO TABLE ${APP}.ads_user_retention_day_rate SELECT
 	) * 100
 FROM
 	${APP}.dwt_uv_topic UNION ALL SELECT
-		'$do_date' ,-- 统计日期 date_add('$do_date' ,- 2) ,-- 新增日期 2 ,-- 留存天数
+		'$do_date' ,-- 统计日期
+		date_add('$do_date' ,- 2) ,-- 新增日期
+		2 ,-- 留存天数
 		sum(
 			IF (
 				login_date_first = date_add('$do_date' ,- 2)
@@ -81,7 +85,9 @@ FROM
 		${APP}.dwt_uv_topic
 	UNION ALL
 		SELECT
-			'$do_date' ,-- 统计日期 date_add('$do_date' ,- 3) ,-- 新增日期 3 ,-- 留存天数
+			'$do_date' ,-- 统计日期
+			date_add('$do_date' ,- 3) ,-- 新增日期
+			3 ,-- 留存天数
 			sum(
 				IF (
 					login_date_first = date_add('$do_date',- 3)
@@ -105,7 +111,6 @@ FROM
 					0
 				)
 			) / sum(
-
 				IF (
 					login_date_first = date_add('$do_date' ,- 3),
 					1,

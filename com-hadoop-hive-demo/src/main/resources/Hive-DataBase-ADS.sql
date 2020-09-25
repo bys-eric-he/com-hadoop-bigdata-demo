@@ -95,7 +95,6 @@ DROP TABLE
 CREATE external TABLE ads_back_count
 (
     `dt`            string COMMENT '统计日期',
-    `wk_dt`         string COMMENT '统计日期所在周',
     `wastage_count` BIGINT COMMENT '回流设备数'
 )
     COMMENT '本周回流用户数'
@@ -108,7 +107,6 @@ DROP TABLE
 CREATE external TABLE ads_back_count
 (
     `dt`            string COMMENT 'Statistic Date',
-    `wk_dt`         string COMMENT 'Week of the statistical date',
     `wastage_count` BIGINT COMMENT 'Number of return equipment'
 )
     COMMENT 'Number of returning users this week'
