@@ -20,7 +20,7 @@ fi
 
 sql="
 set hive.exec.dynamic.partition.mode=nonstrict;
-insert overwrite table ${APP}.dwd_start_log
+INSERT OVERWRITE TABLE ${APP}.dwd_start_log
 PARTITION (dt='$do_date')
 select
 get_json_object(line,'$.mid') mid_id,

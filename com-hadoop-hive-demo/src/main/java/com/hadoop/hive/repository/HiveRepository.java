@@ -23,6 +23,16 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
     private final static Logger logger = LoggerFactory.getLogger(HiveRepository.class);
 
     /**
+     * 执行SQL
+     *
+     * @param sql
+     */
+    public void execute(String sql) {
+        this.getJdbcTemplate().execute(sql);
+        logger.info("--->Running: " + sql);
+    }
+
+    /**
      * 获取所以数据信息
      *
      * @param sql
@@ -32,7 +42,6 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
     public List<Map<String, Object>> queryForList(String sql) {
         return this.getJdbcTemplate().queryForList(sql);
     }
-
 
     /**
      * 列举当前Hive库中的所有数据表
@@ -80,6 +89,7 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
         try {
             String sql = "load data local inpath '" + filePath + "' into table '" + tableName + "'";
             this.getJdbcTemplate().execute(sql);
+            logger.info("-->{},{}", result, sql);
         } catch (DataAccessException dae) {
             result = "Load data into table encounter an error: " + dae.getMessage();
             logger.error(result);
@@ -97,6 +107,7 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
         String result = "Insert into table successfully...";
         try {
             this.getJdbcTemplate().execute(sql);
+            logger.info("-->{},{}", result, sql);
         } catch (DataAccessException dae) {
             result = "Insert into table encounter an error: " + dae.getMessage();
             logger.error(result);
@@ -116,6 +127,7 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
         logger.info("-->Running: " + sql);
         try {
             this.getJdbcTemplate().execute(sql);
+            logger.info("-->{},{}", result, sql);
         } catch (DataAccessException dae) {
             result = "Drop table encounter an error: " + dae.getMessage();
             logger.error(result);
