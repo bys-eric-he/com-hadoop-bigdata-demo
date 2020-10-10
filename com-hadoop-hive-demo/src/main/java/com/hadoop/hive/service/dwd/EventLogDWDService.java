@@ -12,4 +12,18 @@ public interface EventLogDWDService extends ETLService {
      * @param sql
      */
     void comment(String sql);
+
+    /**
+     * 从事件日志中抓取点赞内容
+     *
+     * @param sql
+     */
+    void praise(String sql);
+
+    /**
+     * 从事件日志中抓取活跃用户内容
+     *
+     * @param sql
+     */
+    void active(String sql);
 }

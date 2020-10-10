@@ -5,6 +5,7 @@ import com.hadoop.hive.common.DateUtil;
 /**
  * ETL数据抽取、清洗、统计脚本
  * Demo演示场景：
+ * --------------------设备启动日志---------------------
  * 1. 活跃设备数
  * 2. 连续活跃设备数
  * 3. 最近连续三周活跃用户数
@@ -13,6 +14,10 @@ import com.hadoop.hive.common.DateUtil;
  * 6. 每日新增设备信息数量
  * 7. 沉默用户数
  * 8. 本周回流用户数
+ * --------------------用户操作事件日志------------------
+ * 1. 用户评论数据
+ * 2. 用户点赞数据
+ * 3. 活跃用户数据
  */
 public class HiveSQL {
     /**
@@ -84,6 +89,74 @@ public class HiveSQL {
                     "AND event_name = 'comment' ",
             DateUtil.getCurrentDate("yyyy-MM-dd"),
             DateUtil.getCurrentDate("yyyy-MM-dd"));
+
+    /**
+     * 事件日志DWD 明细数据层，抽取点赞数据
+     */
+    public final static String SQL_ODS_TO_DWD_PRAISE_EVENT = String.format("\n" +
+                    "INSERT overwrite TABLE dwd_praise_log PARTITION (dt = '%s') SELECT\n" +
+                    "\tmid_id,\n" +
+                    "\tuser_id,\n" +
+                    "\tversion_code,\n" +
+                    "\tversion_name,\n" +
+                    "\tlang,\n" +
+                    "\tsource,\n" +
+                    "\tos,\n" +
+                    "\tarea,\n" +
+                    "\tmodel,\n" +
+                    "\tbrand,\n" +
+                    "\tsdk_version,\n" +
+                    "\tgmail,\n" +
+                    "\theight_width,\n" +
+                    "\tapp_time,\n" +
+                    "\tnetwork,\n" +
+                    "\tlng,\n" +
+                    "\tlat,\n" +
+                    "\tget_json_object(event_json,'$.kv.id') id,\n" +
+                    "\tget_json_object(event_json,'$.kv.userid') userid,\n" +
+                    "\tget_json_object(event_json,'$.kv.target_id') target_id,\n" +
+                    "\tget_json_object(event_json,'$.kv.type') type,\n" +
+                    "\tget_json_object(event_json,'$.kv.add_time') add_time,\n" +
+                    "\tserver_time\n" +
+                    "FROM\n" +
+                    "\tdwd_base_event_log\n" +
+                    "WHERE\n" +
+                    "\tdt = '%s'\n" +
+                    "AND event_name = 'praise' ",
+            DateUtil.getCurrentDate("yyyy-MM-dd"),
+            DateUtil.getCurrentDate("yyyy-MM-dd"));
+
+    /**
+     * 事件日志DWD 明细数据层，抽取活跃用户数据
+     */
+    public final static String SQL_ODS_TO_DWD_ACTIVE_EVENT = String.format("INSERT overwrite TABLE dwd_active_background_log PARTITION (dt = '%s') SELECT\n" +
+                    "\tmid_id,\n" +
+                    "\tuser_id,\n" +
+                    "\tversion_code,\n" +
+                    "\tversion_name,\n" +
+                    "\tlang,\n" +
+                    "\tsource,\n" +
+                    "\tos,\n" +
+                    "\tarea,\n" +
+                    "\tmodel,\n" +
+                    "\tbrand,\n" +
+                    "\tsdk_version,\n" +
+                    "\tgmail,\n" +
+                    "\theight_width,\n" +
+                    "\tapp_time,\n" +
+                    "\tnetwork,\n" +
+                    "\tlng,\n" +
+                    "\tlat,\n" +
+                    "\tget_json_object(event_json,'$.kv.active_source') active_source,\n" +
+                    "\tserver_time\n" +
+                    "FROM\n" +
+                    "\tdwd_base_event_log\n" +
+                    "WHERE\n" +
+                    "\tdt = '%s'\n" +
+                    "AND event_name = 'active_background' ",
+            DateUtil.getCurrentDate("yyyy-MM-dd"),
+            DateUtil.getCurrentDate("yyyy-MM-dd"));
+
     /**
      * 启动日志DWD 明细数据层，对ODS层进行数据清洗
      */

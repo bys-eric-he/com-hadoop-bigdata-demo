@@ -77,6 +77,30 @@ public class ETLJobController {
         }
     }
 
+    @ApiOperation("App操作行为日志 DWD明细数据层操作，抽取点赞数据")
+    @RequestMapping(path = "/dwd/eventLog/praise", method = RequestMethod.GET)
+    public Result<Object> jobEventLogODSToDWDPraiseExecute() {
+        try {
+            eventLogDWDService.praise(HiveSQL.SQL_ODS_TO_DWD_PRAISE_EVENT);
+            return ResultUtil.success();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.failureDefaultError();
+        }
+    }
+
+    @ApiOperation("App操作行为日志 DWD明细数据层操作，抽取活跃用户数据")
+    @RequestMapping(path = "/dwd/eventLog/active", method = RequestMethod.GET)
+    public Result<Object> jobEventLogODSToDWDActiveExecute() {
+        try {
+            eventLogDWDService.active(HiveSQL.SQL_ODS_TO_DWD_ACTIVE_EVENT);
+            return ResultUtil.success();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.failureDefaultError();
+        }
+    }
+
     @ApiOperation("App启动日志 DWS服务数据层，以DWD为基础按天进行轻度汇总")
     @RequestMapping(path = "/dws/startLog", method = RequestMethod.GET)
     public Result<Object> jobStartLogDWDToDWSExecute() {
