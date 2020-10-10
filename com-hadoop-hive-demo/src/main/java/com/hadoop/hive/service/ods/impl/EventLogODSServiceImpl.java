@@ -1,4 +1,4 @@
-package com.hadoop.hive.service.impl.ods;
+package com.hadoop.hive.service.ods.impl;
 
 import com.hadoop.hive.common.DateUtil;
 import com.hadoop.hive.entity.log.EventLog;

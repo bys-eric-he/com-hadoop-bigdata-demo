@@ -16,4 +16,11 @@
 
     <packaging>war</packaging>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch-hadoop</artifactId>
+            <version>6.5.4</version>
+        </dependency>
+    </dependencies>
 </project>

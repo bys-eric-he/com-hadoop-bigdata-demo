@@ -89,7 +89,7 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
         try {
             String sql = "load data local inpath '" + filePath + "' into table '" + tableName + "'";
             this.getJdbcTemplate().execute(sql);
-            logger.info("-->{},{}", result, sql);
+            logger.info("-->{},\n SQL->{}", result, sql);
         } catch (DataAccessException dae) {
             result = "Load data into table encounter an error: " + dae.getMessage();
             logger.error(result);
@@ -107,7 +107,7 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
         String result = "Insert into table successfully...";
         try {
             this.getJdbcTemplate().execute(sql);
-            logger.info("-->{},{}", result, sql);
+            logger.info("-->{},\n SQL->{}", result, sql);
         } catch (DataAccessException dae) {
             result = "Insert into table encounter an error: " + dae.getMessage();
             logger.error(result);
@@ -127,7 +127,7 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
         logger.info("-->Running: " + sql);
         try {
             this.getJdbcTemplate().execute(sql);
-            logger.info("-->{},{}", result, sql);
+            logger.info("-->{},\n SQL->{}", result, sql);
         } catch (DataAccessException dae) {
             result = "Drop table encounter an error: " + dae.getMessage();
             logger.error(result);
