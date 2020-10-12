@@ -66,11 +66,11 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
      */
     public String createTable(String sql) {
         logger.info("-->Running: " + sql);
-        String result = "Create table successfully...";
+        String result = "创建表成功...";
         try {
             this.getJdbcTemplate().execute(sql);
         } catch (DataAccessException dae) {
-            result = "********Create table encounter an error: " + dae.getMessage();
+            result = "********创建表异常，异常信息-> " + dae.getMessage();
             logger.error(result);
         }
         return result;
@@ -85,13 +85,13 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
      * @return
      */
     public String loadIntoTable(String filePath, String tableName) {
-        String result = "Load data into table successfully...";
+        String result = "加载数据到表成功...";
         try {
             String sql = "load data local inpath '" + filePath + "' into table '" + tableName + "'";
             this.getJdbcTemplate().execute(sql);
-            logger.info("-->{},\n SQL->{}", result, sql);
+            logger.info("-->{},\n 执行SQL->{}", result, sql);
         } catch (DataAccessException dae) {
-            result = "Load data into table encounter an error: " + dae.getMessage();
+            result = "********加载数据到表失败，错误信息-> " + dae.getMessage();
             logger.error(result);
         }
         return result;
@@ -104,12 +104,12 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
      * @return
      */
     public String insertIntoTable(String sql) {
-        String result = "Insert into table successfully...";
+        String result = "插入数据到表成功!";
         try {
             this.getJdbcTemplate().execute(sql);
-            logger.info("-->{},\n SQL->{}", result, sql);
+            logger.info("-->{},\n执行SQL->{}", result, sql);
         } catch (DataAccessException dae) {
-            result = "Insert into table encounter an error: " + dae.getMessage();
+            result = "********插入数据到表失败, 异常信息-> " + dae.getMessage();
             logger.error(result);
         }
         return result;
@@ -123,13 +123,13 @@ public class HiveRepository extends HiveBaseJDBCTemplate {
      */
     public String drop(String tableName) {
         String sql = "DROP TABLE IF EXISTS " + tableName;
-        String result = "Drop table successfully...";
+        String result = "删除表成功...";
         logger.info("-->Running: " + sql);
         try {
             this.getJdbcTemplate().execute(sql);
-            logger.info("-->{},\n SQL->{}", result, sql);
+            logger.info("-->{},\n 执行SQL->{}", result, sql);
         } catch (DataAccessException dae) {
-            result = "Drop table encounter an error: " + dae.getMessage();
+            result = "********删除表发生异常, 异常信息-> " + dae.getMessage();
             logger.error(result);
         }
         return result;

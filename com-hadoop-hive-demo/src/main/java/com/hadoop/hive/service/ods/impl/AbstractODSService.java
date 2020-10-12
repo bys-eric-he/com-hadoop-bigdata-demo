@@ -29,7 +29,7 @@ public abstract class AbstractODSService<T> implements ODSService<T> {
                 log.info("---------------接收到原始数据--------------");
                 String sql = this.takeContext(t);
                 hiveRepository.insertIntoTable(sql);
-                log.info("---------------保存原始数据完成--------------");
+                log.info("---------------原始数据处理结束--------------");
             } catch (Exception e) {
                 log.error("******执行原始数据作业异常->{}", e.getMessage());
                 e.printStackTrace();
