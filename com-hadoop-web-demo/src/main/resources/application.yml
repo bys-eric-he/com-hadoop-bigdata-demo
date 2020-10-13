@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://10.1.2.237:3306/demo_database_gmall?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&createDatabaseIfNotExist=true&useSSL=true
+    username: root
+    password: root
+
+  jpa:
+    properties:
+          hibernate:
+            hbm2ddl:
+              auto: update  #update：最常用的属性值，第一次加载Hibernate时创建数据表（前提是需要先有数据库），以后加载HIbernate时只会根据model更新，即使model已经删除了某些属性，数据表也不会随之删除字段。
+            dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+            format_sql: true
+    show-sql: true
+    database: mysql
+    hibernate:
+      ddl-auto: update

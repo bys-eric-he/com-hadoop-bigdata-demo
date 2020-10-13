@@ -1,4 +1,5 @@
-package com.hadoop.hive.config;
+package com.hadoop.web.config;
+
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -35,9 +36,9 @@ public class Swagger2Config {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("犇犇大数据仓库1.0")
-                .description("基于Hive存储的数据仓库,实现数据分层,将数据从来源端经过抽取（extract）、转换（transform）、加载（load）至目的端的过程。")
-                .termsOfServiceUrl("http://localhost:8089/swagger-ui.html")
+                .title("犇犇大数据仓库可视化数据接口1.0")
+                .description("查询Hive计算结果,数据由Hive ADS层通过Sqoop同步到MySQL相同表结构中存储,以便可视化查询和显示。")
+                .termsOfServiceUrl("http://localhost:8080/swagger-ui.html")
                 .contact(new Contact("何涌", "", "heyong@9fstock.com"))
                 .version("1.0")
                 .build();
