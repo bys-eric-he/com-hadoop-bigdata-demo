@@ -2,7 +2,7 @@ package com.hadoop.web.controller;
 
 import com.hadoop.web.common.Result;
 import com.hadoop.web.common.ResultUtil;
-import com.hadoop.web.entity.ContinuityWKCount;
+import com.hadoop.web.model.ContinuityWKCountModel;
 import com.hadoop.web.service.ContinuityWKCountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,8 +22,8 @@ public class ContinuityWKCountController {
 
     @ApiOperation("获取所有最近连续三周活跃用户数")
     @RequestMapping(path = "/findAll", method = RequestMethod.GET)
-    public Result<List<ContinuityWKCount>> findAll() {
-        List<ContinuityWKCount> continuityWKCounts = continuityWKCountService.findAll();
+    public Result<List<ContinuityWKCountModel>> findAll() {
+        List<ContinuityWKCountModel> continuityWKCounts = continuityWKCountService.findAll();
         return ResultUtil.success(continuityWKCounts);
     }
 }

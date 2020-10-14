@@ -1,6 +1,6 @@
 package com.hadoop.web.service;
 
-import com.hadoop.web.entity.ContinuityUVCount;
+import com.hadoop.web.model.ContinuityUVCountModel;
 
 import java.util.List;
 
@@ -8,5 +8,5 @@ import java.util.List;
  * 连续活跃设备数
  */
 public interface ContinuityUVCountService {
-    List<ContinuityUVCount> findAll();
+    List<ContinuityUVCountModel> findAll();
 }

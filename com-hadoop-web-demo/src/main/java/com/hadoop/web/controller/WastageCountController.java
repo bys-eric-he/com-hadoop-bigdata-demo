@@ -2,7 +2,7 @@ package com.hadoop.web.controller;
 
 import com.hadoop.web.common.Result;
 import com.hadoop.web.common.ResultUtil;
-import com.hadoop.web.entity.WastageCount;
+import com.hadoop.web.model.WastageCountModel;
 import com.hadoop.web.service.WastageCountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,8 +23,8 @@ public class WastageCountController {
 
     @ApiOperation("获取所有流失用户数")
     @RequestMapping(path = "/findAll", method = RequestMethod.GET)
-    public Result<List<WastageCount>> findAll() {
-        List<WastageCount> wastageCounts = wastageCountService.findAll();
+    public Result<List<WastageCountModel>> findAll() {
+        List<WastageCountModel> wastageCounts = wastageCountService.findAll();
         return ResultUtil.success(wastageCounts);
     }
 }

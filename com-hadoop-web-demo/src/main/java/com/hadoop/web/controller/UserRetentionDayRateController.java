@@ -2,7 +2,7 @@ package com.hadoop.web.controller;
 
 import com.hadoop.web.common.Result;
 import com.hadoop.web.common.ResultUtil;
-import com.hadoop.web.entity.UserRetentionDayRate;
+import com.hadoop.web.model.UserRetentionDayRateModel;
 import com.hadoop.web.service.UserRetentionDayRateService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,8 +23,8 @@ public class UserRetentionDayRateController {
 
     @ApiOperation("获取所有沉默用户数")
     @RequestMapping(path = "/findAll", method = RequestMethod.GET)
-    public Result<List<UserRetentionDayRate>> findAll() {
-        List<UserRetentionDayRate> userRetentionDayRates = userRetentionDayRateService.findAll();
+    public Result<List<UserRetentionDayRateModel>> findAll() {
+        List<UserRetentionDayRateModel> userRetentionDayRates = userRetentionDayRateService.findAll();
         return ResultUtil.success(userRetentionDayRates);
     }
 }

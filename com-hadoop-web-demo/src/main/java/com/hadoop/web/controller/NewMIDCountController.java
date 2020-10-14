@@ -2,7 +2,7 @@ package com.hadoop.web.controller;
 
 import com.hadoop.web.common.Result;
 import com.hadoop.web.common.ResultUtil;
-import com.hadoop.web.entity.NewMIDCount;
+import com.hadoop.web.model.NewMIDCountModel;
 import com.hadoop.web.service.NewMIDCountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,8 +23,8 @@ public class NewMIDCountController {
 
     @ApiOperation("获取所有最近连续三周活跃用户数")
     @RequestMapping(path = "/findAll", method = RequestMethod.GET)
-    public Result<List<NewMIDCount>> findAll() {
-        List<NewMIDCount> newMIDCounts = newMIDCountService.findAll();
+    public Result<List<NewMIDCountModel>> findAll() {
+        List<NewMIDCountModel> newMIDCounts = newMIDCountService.findAll();
         return ResultUtil.success(newMIDCounts);
     }
 }

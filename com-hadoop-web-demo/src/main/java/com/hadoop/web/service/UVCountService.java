@@ -1,6 +1,6 @@
 package com.hadoop.web.service;
 
-import com.hadoop.web.entity.UVCount;
+import com.hadoop.web.model.UVCountModel;
 
 import java.util.List;
 
@@ -8,5 +8,5 @@ import java.util.List;
  * 活跃设备数统计表
  */
 public interface UVCountService {
-    List<UVCount> findAll();
+    List<UVCountModel> findAll();
 }

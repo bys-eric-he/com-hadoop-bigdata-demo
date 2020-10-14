@@ -2,7 +2,7 @@ package com.hadoop.web.controller;
 
 import com.hadoop.web.common.Result;
 import com.hadoop.web.common.ResultUtil;
-import com.hadoop.web.entity.UVCount;
+import com.hadoop.web.model.UVCountModel;
 import com.hadoop.web.service.UVCountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -22,8 +22,8 @@ public class UVCountController {
 
     @ApiOperation("获取所有活跃设备数")
     @RequestMapping(path = "/findAll", method = RequestMethod.GET)
-    public Result<List<UVCount>> findAll() {
-        List<UVCount> uvCounts = uvCountService.findAll();
+    public Result<List<UVCountModel>> findAll() {
+        List<UVCountModel> uvCounts = uvCountService.findAll();
         return ResultUtil.success(uvCounts);
     }
 }

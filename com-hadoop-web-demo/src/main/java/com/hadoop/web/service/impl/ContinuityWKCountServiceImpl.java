@@ -1,11 +1,14 @@
 package com.hadoop.web.service.impl;
 
 import com.hadoop.web.entity.ContinuityWKCount;
+import com.hadoop.web.mapping.ContinuityWKCountMapping;
+import com.hadoop.web.model.ContinuityWKCountModel;
 import com.hadoop.web.repository.ContinuityWKCountJPARepository;
 import com.hadoop.web.service.ContinuityWKCountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +21,13 @@ public class ContinuityWKCountServiceImpl implements ContinuityWKCountService {
     private ContinuityWKCountJPARepository jpaRepository;
 
     @Override
-    public List<ContinuityWKCount> findAll() {
-        return jpaRepository.findAll();
+    public List<ContinuityWKCountModel> findAll() {
+
+        List<ContinuityWKCount> continuityWKCounts = jpaRepository.findAll();
+
+        List<ContinuityWKCountModel> results = new ArrayList<>();
+        continuityWKCounts.forEach(o -> results.add(ContinuityWKCountMapping.toModel(o)));
+
+        return results;
     }
 }

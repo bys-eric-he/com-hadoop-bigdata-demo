@@ -1,6 +1,6 @@
 package com.hadoop.web.service;
 
-import com.hadoop.web.entity.SilentCount;
+import com.hadoop.web.model.SilentCountModel;
 
 import java.util.List;
 
@@ -8,5 +8,5 @@ import java.util.List;
  * 沉默用户数统计表
  */
 public interface SilentCountService {
-    List<SilentCount> findAll();
+    List<SilentCountModel> findAll();
 }
