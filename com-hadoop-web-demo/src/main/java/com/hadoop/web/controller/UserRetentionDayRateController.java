@@ -21,7 +21,7 @@ public class UserRetentionDayRateController {
     @Autowired
     private UserRetentionDayRateService userRetentionDayRateService;
 
-    @ApiOperation("获取所有沉默用户数")
+    @ApiOperation("获取每日用户留存情况")
     @RequestMapping(path = "/findAll", method = RequestMethod.GET)
     public Result<List<UserRetentionDayRateModel>> findAll() {
         List<UserRetentionDayRateModel> userRetentionDayRates = userRetentionDayRateService.findAll();
