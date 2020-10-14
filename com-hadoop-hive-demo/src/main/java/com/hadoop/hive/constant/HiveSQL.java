@@ -1,7 +1,5 @@
 package com.hadoop.hive.constant;
 
-import com.hadoop.hive.common.DateUtil;
-
 /**
  * ETL数据抽取、清洗、统计脚本
  * Demo演示场景：
