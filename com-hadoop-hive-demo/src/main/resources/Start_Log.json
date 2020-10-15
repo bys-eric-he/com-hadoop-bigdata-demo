@@ -20,9 +20,9 @@
   "open_ad_type": "Web H5",
   "action": "login",
   "loading_time": "202009241038521",
-  "detail": "The log info is belongs to user start app....",
+  "detail": "用户->2020092409590001在设备->M0001启动了APP!",
   "extend1": {
-    "data": "START APP LOG",
+    "data": "APP启动日志",
     "date": "2020-09-25"
   }
 }
