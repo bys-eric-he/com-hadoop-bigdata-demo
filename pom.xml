@@ -37,6 +37,7 @@
         <module>com-hadoop-flink-demo</module>
         <module>com-hadoop-kafka-demo</module>
         <module>com-hadoop-hive-udf</module>
+        <module>com-hadoop-azkaban-demo</module>
     </modules>
 
     <build>

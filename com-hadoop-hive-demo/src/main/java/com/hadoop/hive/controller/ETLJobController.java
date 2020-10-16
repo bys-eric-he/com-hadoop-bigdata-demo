@@ -49,9 +49,12 @@ public class ETLJobController {
     @ApiOperation("App操作行为日志 DWD明细数据层操作，对ODS层进行数据清洗")
     @RequestMapping(path = "/dwd/eventLog", method = RequestMethod.GET)
     public Result<Object> jobEventLogODSToDWDExecute(
-            @RequestParam(value = "dateTime", required = true)
+            @RequestParam(value = "dateTime", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dateTime) {
         try {
+            if (dateTime == null) {
+                dateTime = DateUtil.getCurrentDateTime();
+            }
             String sql = String.format(
                     HiveSQL.SQL_ODS_TO_DWD_EVENT,
                     DateUtil.getLocalDateTime(dateTime, "yyyy-MM-dd"),
@@ -68,9 +71,12 @@ public class ETLJobController {
     @ApiOperation("App操作行为日志 DWD明细数据层操作，抽取评论数据")
     @RequestMapping(path = "/dwd/eventLog/comment", method = RequestMethod.GET)
     public Result<Object> jobEventLogODSToDWDCommentExecute(
-            @RequestParam(value = "dateTime", required = true)
+            @RequestParam(value = "dateTime", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dateTime) {
         try {
+            if (dateTime == null) {
+                dateTime = DateUtil.getCurrentDateTime();
+            }
             String sql = String.format(
                     HiveSQL.SQL_ODS_TO_DWD_COMMENT_EVENT,
                     DateUtil.getLocalDateTime(dateTime, "yyyy-MM-dd"),
@@ -87,9 +93,12 @@ public class ETLJobController {
     @ApiOperation("App操作行为日志 DWD明细数据层操作，抽取点赞数据")
     @RequestMapping(path = "/dwd/eventLog/praise", method = RequestMethod.GET)
     public Result<Object> jobEventLogODSToDWDPraiseExecute(
-            @RequestParam(value = "dateTime", required = true)
+            @RequestParam(value = "dateTime", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dateTime) {
         try {
+            if (dateTime == null) {
+                dateTime = DateUtil.getCurrentDateTime();
+            }
             String sql = String.format(
                     HiveSQL.SQL_ODS_TO_DWD_PRAISE_EVENT,
                     DateUtil.getLocalDateTime(dateTime, "yyyy-MM-dd"),
@@ -106,9 +115,12 @@ public class ETLJobController {
     @ApiOperation("App操作行为日志 DWD明细数据层操作，抽取活跃用户数据")
     @RequestMapping(path = "/dwd/eventLog/active", method = RequestMethod.GET)
     public Result<Object> jobEventLogODSToDWDActiveExecute(
-            @RequestParam(value = "dateTime", required = true)
+            @RequestParam(value = "dateTime", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dateTime) {
         try {
+            if (dateTime == null) {
+                dateTime = DateUtil.getCurrentDateTime();
+            }
             String sql = String.format(
                     HiveSQL.SQL_ODS_TO_DWD_ACTIVE_EVENT,
                     DateUtil.getLocalDateTime(dateTime, "yyyy-MM-dd"),
@@ -125,9 +137,12 @@ public class ETLJobController {
     @ApiOperation("App启动日志 DWD明细数据层操作，对ODS层进行数据清洗")
     @RequestMapping(path = "/dwd/startLog", method = RequestMethod.GET)
     public Result<Object> jobStartLogODSToDWDExecute(
-            @RequestParam(value = "dateTime", required = true)
+            @RequestParam(value = "dateTime", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dateTime) {
         try {
+            if (dateTime == null) {
+                dateTime = DateUtil.getCurrentDateTime();
+            }
             String sql = String.format(
                     HiveSQL.SQL_ODS_TO_DWD_START,
                     DateUtil.getLocalDateTime(dateTime, "yyyy-MM-dd"),
@@ -145,9 +160,12 @@ public class ETLJobController {
     @ApiOperation("App启动日志 DWS服务数据层，以DWD为基础按天进行轻度汇总")
     @RequestMapping(path = "/dws/startLog", method = RequestMethod.GET)
     public Result<Object> jobStartLogDWDToDWSExecute(
-            @RequestParam(value = "dateTime", required = true)
+            @RequestParam(value = "dateTime", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dateTime) {
         try {
+            if (dateTime == null) {
+                dateTime = DateUtil.getCurrentDateTime();
+            }
             String sql = String.format(
                     HiveSQL.SQL_DWD_TO_DWS_START,
                     DateUtil.getLocalDateTime(dateTime, "yyyy-MM-dd"),
@@ -164,9 +182,12 @@ public class ETLJobController {
     @ApiOperation("App启动日志 DWT数据主题层，以DWS层为基础按主题进行汇总")
     @RequestMapping(path = "/dwt/startLog", method = RequestMethod.GET)
     public Result<Object> jobStartLogDWSToDWTExecute(
-            @RequestParam(value = "dateTime", required = true)
+            @RequestParam(value = "dateTime", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dateTime) {
         try {
+            if (dateTime == null) {
+                dateTime = DateUtil.getCurrentDateTime();
+            }
             String sql = String.format(
                     HiveSQL.SQL_DWS_TO_DWT_START,
                     DateUtil.getLocalDateTime(dateTime, "yyyy-MM-dd"),
@@ -184,9 +205,12 @@ public class ETLJobController {
     @ApiOperation("根据DWT数据主题层 生成ADS应用层数据-统计活跃设备数")
     @RequestMapping(path = "/ads/activeDevices", method = RequestMethod.GET)
     public Result<Object> activeDevices(
-            @RequestParam(value = "dateTime", required = true)
+            @RequestParam(value = "dateTime", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dateTime) {
         try {
+            if (dateTime == null) {
+                dateTime = DateUtil.getCurrentDateTime();
+            }
             String sql = String.format(
                     HiveSQL.SQL_DWT_TO_ADS_ACTIVE_DEVICES_START,
                     DateUtil.getLocalDateTime(dateTime, "yyyy-MM-dd"),
@@ -213,9 +237,12 @@ public class ETLJobController {
     @ApiOperation("根据DWT数据主题层 生成ADS应用层数据-统计连续活跃设备数")
     @RequestMapping(path = "/ads/continuousActiveDevices", method = RequestMethod.GET)
     public Result<Object> continuousActiveDevices(
-            @RequestParam(value = "dateTime", required = true)
+            @RequestParam(value = "dateTime", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dateTime) {
         try {
+            if (dateTime == null) {
+                dateTime = DateUtil.getCurrentDateTime();
+            }
             String sql = String.format(
                     HiveSQL.SQL_DWT_TO_ADS_CONTINUOUS_ACTIVE_DEVICES_START,
                     DateUtil.getLocalDateTime(dateTime, "yyyy-MM-dd"),
@@ -235,9 +262,12 @@ public class ETLJobController {
     @ApiOperation("根据DWT数据主题层 生成ADS应用层数据-统计最近连续三周活跃用户数")
     @RequestMapping(path = "/ads/threeConsecutiveWeeks", method = RequestMethod.GET)
     public Result<Object> threeConsecutiveWeeks(
-            @RequestParam(value = "dateTime", required = true)
+            @RequestParam(value = "dateTime", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dateTime) {
         try {
+            if (dateTime == null) {
+                dateTime = DateUtil.getCurrentDateTime();
+            }
             String sql = String.format(
                     HiveSQL.SQL_DWT_TO_ADS_THREE_CONSECUTIVE_WEEKS_START,
                     DateUtil.getLocalDateTime(dateTime, "yyyy-MM-dd"),
@@ -261,9 +291,12 @@ public class ETLJobController {
     @ApiOperation("根据DWT数据主题层 生成ADS应用层数据-统计每日用户留存情况")
     @RequestMapping(path = "/ads/dailyUserRetentionStatus", method = RequestMethod.GET)
     public Result<Object> dailyUserRetentionStatus(
-            @RequestParam(value = "dateTime", required = true)
+            @RequestParam(value = "dateTime", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dateTime) {
         try {
+            if (dateTime == null) {
+                dateTime = DateUtil.getCurrentDateTime();
+            }
             String sql = String.format(
                     HiveSQL.SQL_DWT_TO_ADS_DAILY_USER_RETENTION_STATUS_START,
                     DateUtil.getLocalDateTime(dateTime, "yyyy-MM-dd"),
@@ -308,9 +341,12 @@ public class ETLJobController {
     @ApiOperation("根据DWT数据主题层 生成ADS应用层数据-统计流失用户数")
     @RequestMapping(path = "/ads/lostUsers", method = RequestMethod.GET)
     public Result<Object> lostUsers(
-            @RequestParam(value = "dateTime", required = true)
+            @RequestParam(value = "dateTime", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dateTime) {
         try {
+            if (dateTime == null) {
+                dateTime = DateUtil.getCurrentDateTime();
+            }
             String sql = String.format(
                     HiveSQL.SQL_DWT_TO_ADS_LOST_USERS_START,
                     DateUtil.getLocalDateTime(dateTime, "yyyy-MM-dd"),
@@ -327,9 +363,12 @@ public class ETLJobController {
     @ApiOperation("根据DWT数据主题层 生成ADS应用层数据-统计每日新增设备信息数量")
     @RequestMapping(path = "/ads/newDeviceAddedDaily", method = RequestMethod.GET)
     public Result<Object> newDeviceAddedDaily(
-            @RequestParam(value = "dateTime", required = true)
+            @RequestParam(value = "dateTime", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dateTime) {
         try {
+            if (dateTime == null) {
+                dateTime = DateUtil.getCurrentDateTime();
+            }
             String sql = String.format(
                     HiveSQL.SQL_DWT_TO_ADS_NUMBER_OF_NEW_DEVICE_ADDED_DAILY_START,
                     DateUtil.getLocalDateTime(dateTime, "yyyy-MM-dd"));
@@ -345,9 +384,12 @@ public class ETLJobController {
     @ApiOperation("根据DWT数据主题层 生成ADS应用层数据-统计沉默用户数")
     @RequestMapping(path = "/ads/numberOfSilentUsers", method = RequestMethod.GET)
     public Result<Object> numberOfSilentUsers(
-            @RequestParam(value = "dateTime", required = true)
+            @RequestParam(value = "dateTime", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dateTime) {
         try {
+            if (dateTime == null) {
+                dateTime = DateUtil.getCurrentDateTime();
+            }
             String sql = String.format(
                     HiveSQL.SQL_DWT_TO_ADS_NUMBER_OF_SILENT_USERS_START,
                     DateUtil.getLocalDateTime(dateTime, "yyyy-MM-dd"),
@@ -364,9 +406,12 @@ public class ETLJobController {
     @ApiOperation("根据DWT数据主题层 生成ADS应用层数据-统计本周回流用户数")
     @RequestMapping(path = "/ads/returningUsers", method = RequestMethod.GET)
     public Result<Object> returningUsers(
-            @RequestParam(value = "dateTime", required = true)
+            @RequestParam(value = "dateTime", required = false)
             @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dateTime) {
         try {
+            if (dateTime == null) {
+                dateTime = DateUtil.getCurrentDateTime();
+            }
             String sql = String.format(
                     HiveSQL.SQL_DWT_TO_ADS_RETURNING_USERS_START,
                     DateUtil.getLocalDateTime(dateTime, "yyyy-MM-dd"),
