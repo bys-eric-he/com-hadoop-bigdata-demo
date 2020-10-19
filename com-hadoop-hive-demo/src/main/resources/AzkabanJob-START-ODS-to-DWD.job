@@ -1,0 +1,8 @@
+type=command
+
+echo "--------------Start to Execute ODS To DWD For Start Log Action-----------------"
+echo "-----------API-> http://172.12.0.7:8089/api/v1/etl/dwd/startLog--------"
+
+command=curl -X GET "http://172.12.0.7:8089/api/v1/etl/dwd/startLog" -H "accept: */*"
+
+echo "--------------End to Execute ODS To DWD For Start Log Action-----------------"

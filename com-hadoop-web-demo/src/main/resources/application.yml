@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://10.1.2.237:3306/demo_database_gmall?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&createDatabaseIfNotExist=true&useSSL=true
+    url: jdbc:mysql://172.12.0.3:3306/demo_database_gmall?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8&createDatabaseIfNotExist=true&useSSL=true
     username: root
     password: root
 

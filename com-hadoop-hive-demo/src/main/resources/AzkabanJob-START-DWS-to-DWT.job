@@ -1,0 +1,10 @@
+type=command
+
+echo "--------------Start to Execute DWS To DWT For Start Log Action-----------------"
+echo "-----------API-> http://172.12.0.7:8089/api/v1/etl/dwt/startLog--------"
+
+command=curl -X GET "http://172.12.0.7:8089/api/v1/etl/dwt/startLog" -H "accept: */*"
+
+echo "--------------End to Execute DWS To DWT For Start Log Action-----------------"
+
+dependencies=AzkabanJob-START-DWD-to-DWS
