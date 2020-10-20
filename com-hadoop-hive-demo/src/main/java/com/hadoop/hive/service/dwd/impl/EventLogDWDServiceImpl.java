@@ -22,17 +22,14 @@ public class EventLogDWDServiceImpl implements EventLogDWDService {
      */
     @Override
     public void execute(String sql) {
-        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-        cachedThreadPool.execute(() -> {
-            try {
-                log.info("--------------------开始执行 EventLog ODS To DWD Job作业----------------");
-                hiveRepository.execute(sql);
-                log.info("--------------------结束执行 EventLog ODS To DWD Job作业----------------");
-            } catch (Exception e) {
-                log.error("******执行作业异常->{}", e.getMessage());
-                e.printStackTrace();
-            }
-        });
+        try {
+            log.info("--------------------开始执行 EventLog ODS To DWD Job作业----------------");
+            hiveRepository.execute(sql);
+            log.info("--------------------结束执行 EventLog ODS To DWD Job作业----------------");
+        } catch (Exception e) {
+            log.error("******执行作业异常->{}", e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -42,17 +39,14 @@ public class EventLogDWDServiceImpl implements EventLogDWDService {
      */
     @Override
     public void comment(String sql) {
-        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-        cachedThreadPool.execute(() -> {
-            try {
-                log.info("--------------------开始执行 EventLog ODS To DWD Comment Job作业----------------");
-                hiveRepository.execute(sql);
-                log.info("--------------------结束执行 EventLog ODS To DWD Comment Job作业----------------");
-            } catch (Exception e) {
-                log.error("******执行作业异常->{}", e.getMessage());
-                e.printStackTrace();
-            }
-        });
+        try {
+            log.info("--------------------开始执行 EventLog ODS To DWD Comment Job作业----------------");
+            hiveRepository.execute(sql);
+            log.info("--------------------结束执行 EventLog ODS To DWD Comment Job作业----------------");
+        } catch (Exception e) {
+            log.error("******执行作业异常->{}", e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -62,17 +56,14 @@ public class EventLogDWDServiceImpl implements EventLogDWDService {
      */
     @Override
     public void praise(String sql) {
-        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-        cachedThreadPool.execute(() -> {
-            try {
-                log.info("--------------------开始执行 EventLog ODS To DWD Praise Job作业----------------");
-                hiveRepository.execute(sql);
-                log.info("--------------------结束执行 EventLog ODS To DWD Praise Job作业----------------");
-            } catch (Exception e) {
-                log.error("******执行作业异常->{}", e.getMessage());
-                e.printStackTrace();
-            }
-        });
+        try {
+            log.info("--------------------开始执行 EventLog ODS To DWD Praise Job作业----------------");
+            hiveRepository.execute(sql);
+            log.info("--------------------结束执行 EventLog ODS To DWD Praise Job作业----------------");
+        } catch (Exception e) {
+            log.error("******执行作业异常->{}", e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -82,16 +73,13 @@ public class EventLogDWDServiceImpl implements EventLogDWDService {
      */
     @Override
     public void active(String sql) {
-        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-        cachedThreadPool.execute(() -> {
-            try {
-                log.info("--------------------开始执行 EventLog ODS To DWD Active Job作业----------------");
-                hiveRepository.execute(sql);
-                log.info("--------------------结束执行 EventLog ODS To DWD Active Job作业----------------");
-            } catch (Exception e) {
-                log.error("******执行作业异常->{}", e.getMessage());
-                e.printStackTrace();
-            }
-        });
+        try {
+            log.info("--------------------开始执行 EventLog ODS To DWD Active Job作业----------------");
+            hiveRepository.execute(sql);
+            log.info("--------------------结束执行 EventLog ODS To DWD Active Job作业----------------");
+        } catch (Exception e) {
+            log.error("******执行作业异常->{}", e.getMessage());
+            e.printStackTrace();
+        }
     }
 }
