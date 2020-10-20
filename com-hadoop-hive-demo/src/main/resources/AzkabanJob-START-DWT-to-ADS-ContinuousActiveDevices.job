@@ -1,0 +1,10 @@
+type=command
+
+echo "--------------Start to Execute DWT To ADS For Continuous Active Devices Action-----------------"
+echo "-----------API-> http://172.12.0.7:8089/api/v1/etl/ads/continuousActiveDevices--------"
+
+command=curl -X GET "http://172.12.0.7:8089/api/v1/etl/ads/continuousActiveDevices" -H "accept: */*"
+
+echo "--------------End to Execute DWT To ADS For Continuous Active Devices Action-----------------"
+
+dependencies=AzkabanJob-START-DWS-to-DWT

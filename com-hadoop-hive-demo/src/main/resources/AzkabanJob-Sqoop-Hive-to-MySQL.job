@@ -1,0 +1,11 @@
+type=command
+
+echo "--------------Start to Execute Sqoop Hive To MySQL Action-----------------"
+
+echo "sh /usr/local/sqoop-1.4.7/Sqoop-Hive-To-MySQL.sh"
+
+command: sh /usr/local/sqoop-1.4.7/Sqoop-Hive-To-MySQL.sh
+
+echo "--------------End to Execute Sqoop Hive To MySQL Action-----------------"
+
+dependencies=AzkabanJob-START-DWT-to-ADS-ActiveDevices,AzkabanJob-START-DWT-to-ADS-ActiveUsersLastThreeConsecutiveWeeks,AzkabanJob-START-DWT-to-ADS-ContinuousActiveDevices,AzkabanJob-START-DWT-to-ADS-DailyUserRetentionStatus,AzkabanJob-START-DWT-to-ADS-LostUsers,AzkabanJob-START-DWT-to-ADS-NumberOfNewDeviceAddedDaily,AzkabanJob-START-DWT-to-ADS-NumberOfSilentUsers,AzkabanJob-START-DWT-to-ADS-ReturningUsers
