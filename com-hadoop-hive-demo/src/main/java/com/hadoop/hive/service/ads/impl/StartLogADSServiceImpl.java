@@ -32,17 +32,14 @@ public class StartLogADSServiceImpl implements StartLogADSService {
      */
     @Override
     public void activeDevices(String sql) {
-        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-        cachedThreadPool.execute(() -> {
-            try {
-                log.info("--------------------开始执行 StartLog Active Devices DWT To ADS Job作业----------------");
-                hiveRepository.execute(sql);
-                log.info("--------------------结束执行 StartLog Active Devices DWT To ADS Job作业----------------");
-            } catch (Exception e) {
-                log.error("******执行作业异常->{}", e.getMessage());
-                e.printStackTrace();
-            }
-        });
+        try {
+            log.info("--------------------开始执行 StartLog Active Devices DWT To ADS Job作业----------------");
+            hiveRepository.execute(sql);
+            log.info("--------------------结束执行 StartLog Active Devices DWT To ADS Job作业----------------");
+        } catch (Exception e) {
+            log.error("******执行作业异常->{}", e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -52,16 +49,13 @@ public class StartLogADSServiceImpl implements StartLogADSService {
      */
     @Override
     public void continuousActiveDevices(String sql) {
-        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-        cachedThreadPool.execute(() -> {
-            try {
-                log.info("--------------------开始执行 StartLog Continuous Active Devices DWT To ADS Job作业----------------");
-                hiveRepository.execute(sql);
-                log.info("--------------------结束执行 StartLog Continuous Active Devices DWT To ADS Job作业----------------");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        try {
+            log.info("--------------------开始执行 StartLog Continuous Active Devices DWT To ADS Job作业----------------");
+            hiveRepository.execute(sql);
+            log.info("--------------------结束执行 StartLog Continuous Active Devices DWT To ADS Job作业----------------");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -71,16 +65,13 @@ public class StartLogADSServiceImpl implements StartLogADSService {
      */
     @Override
     public void threeConsecutiveWeeks(String sql) {
-        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-        cachedThreadPool.execute(() -> {
-            try {
-                log.info("--------------------开始执行 StartLog Three Consecutive Weeks DWT To ADS Job作业----------------");
-                hiveRepository.execute(sql);
-                log.info("--------------------结束执行 StartLog Three Consecutive Weeks DWT To ADS Job作业----------------");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        try {
+            log.info("--------------------开始执行 StartLog Three Consecutive Weeks DWT To ADS Job作业----------------");
+            hiveRepository.execute(sql);
+            log.info("--------------------结束执行 StartLog Three Consecutive Weeks DWT To ADS Job作业----------------");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -90,16 +81,13 @@ public class StartLogADSServiceImpl implements StartLogADSService {
      */
     @Override
     public void dailyUserRetentionStatus(String sql) {
-        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-        cachedThreadPool.execute(() -> {
-            try {
-                log.info("--------------------开始执行 StartLog Daily User Retention Status DWT To ADS Job作业----------------");
-                hiveRepository.execute(sql);
-                log.info("--------------------结束执行 StartLog Daily User Retention Status DWT To ADS Job作业----------------");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        try {
+            log.info("--------------------开始执行 StartLog Daily User Retention Status DWT To ADS Job作业----------------");
+            hiveRepository.execute(sql);
+            log.info("--------------------结束执行 StartLog Daily User Retention Status DWT To ADS Job作业----------------");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -109,16 +97,13 @@ public class StartLogADSServiceImpl implements StartLogADSService {
      */
     @Override
     public void lostUsers(String sql) {
-        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-        cachedThreadPool.execute(() -> {
-            try {
-                log.info("--------------------开始执行 StartLog Lost User DWT To ADS Job作业----------------");
-                hiveRepository.execute(sql);
-                log.info("--------------------结束执行 StartLog Lost User DWT To ADS Job作业----------------");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        try {
+            log.info("--------------------开始执行 StartLog Lost User DWT To ADS Job作业----------------");
+            hiveRepository.execute(sql);
+            log.info("--------------------结束执行 StartLog Lost User DWT To ADS Job作业----------------");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -128,16 +113,13 @@ public class StartLogADSServiceImpl implements StartLogADSService {
      */
     @Override
     public void newDeviceAddedDaily(String sql) {
-        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-        cachedThreadPool.execute(() -> {
-            try {
-                log.info("--------------------开始执行 StartLog New Device Added Daily DWT To ADS Job作业----------------");
-                hiveRepository.execute(sql);
-                log.info("--------------------结束执行 StartLog New Device Added Daily DWT To ADS Job作业----------------");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        try {
+            log.info("--------------------开始执行 StartLog New Device Added Daily DWT To ADS Job作业----------------");
+            hiveRepository.execute(sql);
+            log.info("--------------------结束执行 StartLog New Device Added Daily DWT To ADS Job作业----------------");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -147,16 +129,13 @@ public class StartLogADSServiceImpl implements StartLogADSService {
      */
     @Override
     public void numberOfSilentUsers(String sql) {
-        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-        cachedThreadPool.execute(() -> {
-            try {
-                log.info("--------------------开始执行 StartLog Number Of Silent Users DWT To ADS Job作业----------------");
-                hiveRepository.execute(sql);
-                log.info("--------------------结束执行 StartLog Number Of Silent Users DWT To ADS Job作业----------------");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        try {
+            log.info("--------------------开始执行 StartLog Number Of Silent Users DWT To ADS Job作业----------------");
+            hiveRepository.execute(sql);
+            log.info("--------------------结束执行 StartLog Number Of Silent Users DWT To ADS Job作业----------------");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -166,15 +145,12 @@ public class StartLogADSServiceImpl implements StartLogADSService {
      */
     @Override
     public void returningUsers(String sql) {
-        ExecutorService cachedThreadPool = Executors.newCachedThreadPool();
-        cachedThreadPool.execute(() -> {
-            try {
-                log.info("--------------------开始执行 StartLog Returning Users DWT To ADS Job作业----------------");
-                hiveRepository.execute(sql);
-                log.info("--------------------结束执行 StartLog Returning Users DWT To ADS Job作业----------------");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
+        try {
+            log.info("--------------------开始执行 StartLog Returning Users DWT To ADS Job作业----------------");
+            hiveRepository.execute(sql);
+            log.info("--------------------结束执行 StartLog Returning Users DWT To ADS Job作业----------------");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
