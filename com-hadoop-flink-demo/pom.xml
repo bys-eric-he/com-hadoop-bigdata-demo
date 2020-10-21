@@ -11,7 +11,7 @@
 
     <groupId>com.hadoop.flink.demo</groupId>
     <artifactId>com-hadoop-flink-demo</artifactId>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
 

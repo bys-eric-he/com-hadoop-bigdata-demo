@@ -1,6 +1,6 @@
 spring:
   kafka:
-    bootstrap-servers: 10.1.2.237:9092 #指定kafka server的地址，集群可配多个，中间，逗号隔开
+    bootstrap-servers: 10.1.2.30:9092 #指定kafka server的地址，集群可配多个，中间，逗号隔开
     #配置生产者
     producer:
       # 指定消息key和消息体的编解码方式

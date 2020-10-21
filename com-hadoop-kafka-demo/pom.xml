@@ -14,6 +14,7 @@
   <groupId>com.hadoop.kafka.demo</groupId>
   <artifactId>com-hadoop-kafka-demo</artifactId>
   <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
 
   <properties>
 
