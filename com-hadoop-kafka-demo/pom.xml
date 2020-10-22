@@ -21,9 +21,11 @@
   </properties>
 
   <dependencies>
+    <!--Kafka和spring集成的支持类库，spring和kafka通信监听--><!-- https://mvnrepository.com/artifact/org.springframework.integration/spring-integration-kafka -->
     <dependency>
-      <groupId>org.springframework.kafka</groupId>
-      <artifactId>spring-kafka</artifactId>
+      <groupId>org.springframework.integration</groupId>
+      <artifactId>spring-integration-kafka</artifactId>
+      <version>3.2.1.RELEASE</version>
     </dependency>
     <dependency>
       <groupId>org.apache.kafka</groupId>
@@ -36,11 +38,7 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <dependency>
-      <groupId>org.apache.kafka</groupId>
-      <artifactId>kafka-clients</artifactId>
-      <version>2.6.0</version>
-    </dependency>
+
     <dependency>
       <groupId>com.alibaba</groupId>
       <artifactId>fastjson</artifactId>

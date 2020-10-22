@@ -26,6 +26,19 @@ public abstract class AbstractBaseFactory {
     private String acksConfig;
 
     /**
+     * 控制批处理大小，单位为字节
+     */
+    @Value("${spring.kafka.producer.batch-size}")
+    private String batchSizeConfig;
+
+    /**
+     * 批量发送，延迟为1毫秒，启用该功能能有效减少生产者发送消息次数，从而提高并发量
+     */
+    @Value("${spring.kafka.producer.linger-ms}")
+    private String lingerMSConfig;
+
+
+    /**
      * 设置自动提交offset
      */
     @Value("${spring.kafka.consumer.enable-auto-commit}")
@@ -37,5 +50,9 @@ public abstract class AbstractBaseFactory {
     @Value("${spring.kafka.consumer.properties.max.poll.records}")
     private Integer MaxPollRecordsConfig;
 
-
+    /**
+     * 默认消费者group id
+     */
+    @Value("${spring.kafka.consumer.group-id}")
+    private String groupID;
 }

@@ -3,7 +3,6 @@ package com.hadoop.kafka.processor;
 import com.hadoop.kafka.common.KafkaUtils;
 import com.hadoop.kafka.common.TopicConstant;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
@@ -59,10 +58,9 @@ public class ProcessorConfig {
             以下方法会引发异常
             this.userLogConfig();
             this.supplerConfig();
-            */
 
             this.pipeStream();
-            this.lineSplit();
+            this.lineSplit();*/
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -122,15 +120,12 @@ public class ProcessorConfig {
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServersConfig);
         props.put(StreamsConfig.KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
         props.put(StreamsConfig.VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass().getName());
-        props.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
-
 
         TopologyBuilder builder = new TopologyBuilder();
         builder.addSource("SOURCE", "wc-input");
         builder.addProcessor("PROCESSOR-02", new WordCountProcessorSupplier(), "SOURCE");
         builder.addStateStore(Stores.create("Counts").withStringKeys().withIntegerValues().inMemory().build(),
                 "PROCESSOR-02");
-
         // 创建kafka stream
         KafkaStreams streams = new KafkaStreams(builder, props);
         final CountDownLatch latch = new CountDownLatch(1);
@@ -160,19 +155,21 @@ public class ProcessorConfig {
     public void pipeStream() {
         // 设置参数
         Properties settings = new Properties();
+        //GroupID
         settings.put(StreamsConfig.APPLICATION_ID_CONFIG, "kafka_consumer_streams_pipe");
+        //连接地址
         settings.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServersConfig);
+        //键的反序列化方式
         settings.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.String().getClass());
+        //值的反序列化方式
         settings.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.String().getClass());
 
         final StreamsBuilder builder = new StreamsBuilder();
         builder.stream(TopicConstant.KAFKA_STREAMS_PIPE_INPUT).to(TopicConstant.KAFKA_STREAMS_PIPE_OUTPUT);
 
         final Topology topology = builder.build();
-
         final KafkaStreams streams = new KafkaStreams(topology, settings);
         final CountDownLatch latch = new CountDownLatch(1);
-
 
         // attach shutdown handler to catch control-c
         Runtime.getRuntime().addShutdownHook(new Thread("streams-shutdown-hook") {

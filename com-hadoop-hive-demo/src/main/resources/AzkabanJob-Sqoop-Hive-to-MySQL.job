@@ -4,7 +4,7 @@ echo "--------------Start to Execute Sqoop Hive To MySQL Action-----------------
 
 echo "sh /usr/local/sqoop-1.4.7/Sqoop-Hive-To-MySQL.sh"
 
-command: sh /usr/local/sqoop-1.4.7/Sqoop-Hive-To-MySQL.sh
+command:sh /usr/local/Sqoop-Hive-To-MySQL.sh
 
 echo "--------------End to Execute Sqoop Hive To MySQL Action-----------------"
 

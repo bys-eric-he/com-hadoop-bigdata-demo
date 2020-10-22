@@ -3,6 +3,7 @@ package com.hadoop.kafka.factory;
 import com.hadoop.kafka.container.ThreadMessageListenerContainer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.common.IsolationLevel;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.ConsumerFactory;
@@ -10,6 +11,7 @@ import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ContainerProperties;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -25,10 +27,21 @@ public class KafkaConsumerFactory extends AbstractBaseFactory {
 
         // 消费者配置信息
         Map<String, Object> props = new HashMap<>();
+        //GroupID
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, this.getGroupID());
+        //连接地址
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, this.getBootstrapServersConfig());
+        //是否自动提交
         props.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, this.getEnableAutoCommitConfig());
+        //控制单次调用call方法能够返回的记录数量，帮助控制在轮询里需要处理的数据量
         props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, this.getMaxPollRecordsConfig());
+        //Session超时设置
+        props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "15000");
+        //consumer 读取级别 （开启事务的时候一定要设置为读已提交）
+        props.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, IsolationLevel.READ_COMMITTED.toString().toLowerCase(Locale.ROOT));
+        //键的反序列化方式
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        //值的反序列化方式
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
 
         return new DefaultKafkaConsumerFactory<>(props);
