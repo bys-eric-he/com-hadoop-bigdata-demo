@@ -12,6 +12,13 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class UserLogConsumer extends AbstractBaseConsumer {
+    /**
+     * 订阅者
+     * 对同一个topic,不同组中的订阅者都会收到消息,即一个topic对应多个consumer,
+     * 同一组中的订阅者只有一个consumer能够收到消息,即一个topic对应一个consumer.
+     *
+     * @param consumerRecord
+     */
     @KafkaListener(
             id = "user-log-consumer-one",
             groupId = "kafka_consumer_group_user_log",
