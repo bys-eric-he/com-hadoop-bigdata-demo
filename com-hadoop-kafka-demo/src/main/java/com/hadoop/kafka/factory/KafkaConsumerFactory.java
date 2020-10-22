@@ -36,7 +36,7 @@ public class KafkaConsumerFactory extends AbstractBaseFactory {
         //控制单次调用call方法能够返回的记录数量，帮助控制在轮询里需要处理的数据量
         props.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, this.getMaxPollRecordsConfig());
         //Session超时设置
-        props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, "15000");
+        props.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, this.getSessionTimeOut());
         //consumer 读取级别 （开启事务的时候一定要设置为读已提交）
         props.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, IsolationLevel.READ_COMMITTED.toString().toLowerCase(Locale.ROOT));
         //键的反序列化方式

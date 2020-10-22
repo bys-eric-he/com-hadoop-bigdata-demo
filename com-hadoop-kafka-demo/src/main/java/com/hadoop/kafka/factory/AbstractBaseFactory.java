@@ -37,7 +37,6 @@ public abstract class AbstractBaseFactory {
     @Value("${spring.kafka.producer.linger-ms}")
     private String lingerMSConfig;
 
-
     /**
      * 设置自动提交offset
      */
@@ -55,4 +54,10 @@ public abstract class AbstractBaseFactory {
      */
     @Value("${spring.kafka.consumer.group-id}")
     private String groupID;
+
+    /**
+     * Session过期时间
+     */
+    @Value("${spring.kafka.consumer.session-timeout}")
+    private String sessionTimeOut;
 }

@@ -21,6 +21,7 @@ spring:
       group-id: kafka_consumer_group_demo # 指定默认消费者group id --> 由于在kafka中，同一组中的consumer不会读取到同一个消息，依靠groud.id设置组名
       enable-auto-commit: true # 设置自动提交offset
       auto-commit-interval: 1000 #提交offset时间间隔, 如果'enable-auto-commit'为true，则消费者偏移自动提交给Kafka的频率（以毫秒为单位），默认值为5000。
+      session-timeout: 15000 #Session超时设置
       # 指定消息key和消息体的编解码方式
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
