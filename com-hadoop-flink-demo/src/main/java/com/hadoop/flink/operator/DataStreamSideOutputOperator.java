@@ -53,7 +53,14 @@ public class DataStreamSideOutputOperator {
         final DataStream<Tuple2<String, Integer>> strSideOutput = process.getSideOutput(strSplitStream);
         final DataStream<Tuple2<String, Integer>> intSideOutput = process.getSideOutput(intSplitStream);
 
+        //输出：
+        //Name:4> (Vidal.Deng,27)
+        //Name:5> (Alex.Zheng,31)
+        //Name:7> (Felix.Huang,33)
+        //Name:6> (Sky.Zhang,34)
+        //Name:8> (Robert.Luo,33)
         strSideOutput.print("Name");
+        //输出：Age:3> (666,33)
         intSideOutput.printToErr("Age");
 
         //4.二次分流
@@ -71,6 +78,7 @@ public class DataStreamSideOutputOperator {
 
         final DataStream<Tuple2<String, Integer>> strSecondSideOutput = processSecond.getSideOutput(secondSplitStream);
 
+        // 输出: 邓嘉腾:4> (Vidal.Deng,27)
         strSecondSideOutput.printToErr("邓嘉腾");
 
         String jobName = "用户自定义数据源";
