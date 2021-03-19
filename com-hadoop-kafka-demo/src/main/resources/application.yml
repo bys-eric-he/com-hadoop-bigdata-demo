@@ -1,20 +1,54 @@
+# mybatis 相关配置
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.hadoop.kafka.entity  #所有entity别名所在包
+  configuration:
+    # 是否打印sql语句 调试的时候可以开启
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# Spring 相关配置
 spring:
+  datasource:
+    #zookeeper地址
+    url: jdbc:phoenix:10.2.13.24:2181
+    driver-class-name: org.apache.phoenix.jdbc.PhoenixDriver
+
+    # 如果不想配置对数据库连接池做特殊配置的话,以下关于连接池的配置就不是必须的
+    # spring-boot 2.X 默认采用高性能的 Hikari 作为连接池
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      # 池中维护的最小空闲连接数
+      minimum-idle: 10
+      # 池中最大连接数，包括闲置和使用中的连接
+      maximum-pool-size: 20
+      # 此属性控制从池返回的连接的默认自动提交行为。默认为true
+      auto-commit: true
+      # 允许最长空闲时间
+      idle-timeout: 30000
+      # 此属性表示连接池的用户定义名称，主要显示在日志记录和JMX管理控制台中，以标识池和池配置。 默认值：自动生成
+      pool-name: custom-hikari
+      #此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      max-lifetime: 1800000
+      # 数据库连接超时时间,默认30秒，即30000
+      connection-timeout: 30000
+      # 连接测试sql 这个地方需要根据数据库方言差异而配置 例如 oracle 就应该写成  select 1 from dual
+      connection-test-query: SELECT 1
   kafka:
-    bootstrap-servers: 10.1.2.17:9092 #指定kafka server的地址，集群可配多个，中间，逗号隔开
+    bootstrap-servers: 10.2.13.22:9092,10.2.13.23:9092,10.2.13.24:9092 #指定kafka server的地址，集群可配多个，中间，逗号隔开
     #配置生产者
     producer:
       # 指定消息key和消息体的编解码方式
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
       retries: 2  # 失败重试发送的次数,写入失败时，重试次数。当leader节点失效，一个repli节点会替代成为leader节点，此时可能出现写入失败。
-                  # 当retris为0时，produce不会重复。retirs重发，此时repli节点完全成为leader节点，不会产生消息丢失。
+      # 当retris为0时，produce不会重复。retirs重发，此时repli节点完全成为leader节点，不会产生消息丢失。
       batch-size: 16384 # 每次批量发送消息的数量,produce积累到一定数据，一次发送
       buffer-memory: 33554432 # produce积累数据一次发送，缓存大小达到buffer.memory就发送数据
       acks: all #procedure要求leader在考虑完成请求之前收到的确认数，用于控制发送记录在服务端的持久化，其值可以为如下：
         #acks = 0 如果设置为零，则生产者将不会等待来自服务器的任何确认，该记录将立即添加到套接字缓冲区并视为已发送。在这种情况下，无法保证服务器已收到记录，并且重试配置将不会生效（因为客户端通常不会知道任何故障），为每条记录返回的偏移量始终设置为-1。
         #acks = 1 这意味着leader会将记录写入其本地日志，但无需等待所有副本服务器的完全确认即可做出回应，在这种情况下，如果leader在确认记录后立即失败，但在将数据复制到所有的副本服务器之前，则记录将会丢失。
         #acks = all 这意味着leader将等待完整的同步副本集以确认记录，这保证了只要至少一个同步副本服务器仍然存活，记录就不会丢失，这是最强有力的保证，这相当于acks = -1的设置。
-        #可以设置的值为：all, -1, 0, 1
+      #可以设置的值为：all, -1, 0, 1
       linger-ms: 1 #批量发送，延迟为1毫秒，启用该功能能有效减少生产者发送消息次数，从而提高并发量
     #配置消费者
     consumer:

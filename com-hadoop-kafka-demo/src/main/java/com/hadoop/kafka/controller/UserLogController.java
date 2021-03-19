@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(tags = "UserLogController", description = "用户日志API服务")
+@Api(value = "/api/v1/user-log", tags = "用户日志API服务")
 @RestController
 @RequestMapping("/api/v1/user-log")
 public class UserLogController {

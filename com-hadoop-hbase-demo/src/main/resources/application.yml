@@ -2,7 +2,7 @@
 #需要在容器映射16020端口 -p 16020:16020，并将容器id 加到hosts文件中，对应宿主机IP。例如:10.1.2.168 faa5b5d021b7
 hbase:
   config:
-    hbase.zookeeper.quorum: 10.1.2.237:2181
+    hbase.zookeeper.quorum: 10.2.13.24:2181
     hbase.zookeeper.property.clientPort: 2181
     zookeeper.znode.parent: /hbase
 #日志配置文件
