@@ -29,15 +29,15 @@ public class UserOrderProducer {
 
             // 使用OrderID哈希值对主题分区数量取模,让数据发送到不同的分区,达到负载均衡，提高kafka的吞吐量.
             String key = userOrder.getOrderID();
-            int hCode = key.hashCode();
+            //int hCode = key.hashCode();
             // 这里是分8个分片；需要注意的是hashcode有可能为负数；可以通过&操作；
             // 或者直接Math.Abs(hCode%2)也可以
-            int partitionNum = (hCode & 0x7fffffff) % 8;
-            log.info("---->计算出主题分区是：{}", partitionNum);
-            // 发送内容
+            //int partitionNum = (hCode & 0x7fffffff) % 8;
+            //log.info("---->计算出主题分区是：{}", partitionNum);
+            // 发送内容(计算分区由com.hadoop.kafka.config.PartitionStrategyConfig计算)
             ProducerRecord<?, String> record = new ProducerRecord<>(
                     TopicConstant.USER_ORDER_TOPIC_MESSAGE,
-                    partitionNum,
+                    //partitionNum,
                     key,
                     JSON.toJSONString(userOrder));
 

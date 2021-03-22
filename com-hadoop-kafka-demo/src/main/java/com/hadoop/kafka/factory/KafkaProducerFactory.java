@@ -47,6 +47,8 @@ public class KafkaProducerFactory extends AbstractBaseFactory {
         // 如果用户还显式地指定了 acks 参数，那么还需要保证这个参数的值为 -1（all），如果不为 -1（这个参数的值默认为1）
         // 那么会报出 org.apache.kafka.common.config.ConfigException: Must set acks to all in order to use the idempotent producer. Otherwise we cannot guarantee idempotence.
         props.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG, true);
+        //指定分区策略
+        props.put(ProducerConfig.PARTITIONER_CLASS_CONFIG,this.getPartitionStrategy());
         return new DefaultKafkaProducerFactory<>(props);
     }
 

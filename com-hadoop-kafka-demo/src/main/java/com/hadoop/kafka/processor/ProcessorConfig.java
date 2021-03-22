@@ -3,6 +3,7 @@ package com.hadoop.kafka.processor;
 import com.hadoop.kafka.common.KafkaUtils;
 import com.hadoop.kafka.common.TopicConstant;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.streams.KafkaStreams;
 import org.apache.kafka.streams.StreamsBuilder;
@@ -80,6 +81,9 @@ public class ProcessorConfig {
         Properties settings = new Properties();
         settings.put(StreamsConfig.APPLICATION_ID_CONFIG, "kafka_consumer_group_demo");
         settings.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServersConfig);
+        //指定分区策略
+        settings.put(ProducerConfig.PARTITIONER_CLASS_CONFIG,"com.hadoop.kafka.config.PartitionStrategyConfig");
+
 
         StreamsConfig config = new StreamsConfig(settings);
 

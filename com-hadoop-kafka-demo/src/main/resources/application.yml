@@ -66,6 +66,8 @@ spring:
     listener:
       poll-timeout: 1500   #只限自动提交
       missing-topics-fatal: false  #消费监听接口监听的主题不存在时，默认会报错因此要关掉这个
+    #指定分区策略
+    partition-strategy: "com.hadoop.kafka.config.PartitionStrategyConfig"
 server:
   port: 8500
 #日志配置文件

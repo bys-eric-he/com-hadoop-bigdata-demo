@@ -60,4 +60,10 @@ public abstract class AbstractBaseFactory {
      */
     @Value("${spring.kafka.consumer.session-timeout}")
     private String sessionTimeOut;
+
+    /**
+     * 分区策略
+     */
+    @Value("${spring.kafka.partition-strategy}")
+    private String partitionStrategy;
 }
