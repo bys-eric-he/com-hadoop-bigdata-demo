@@ -14,23 +14,24 @@
     <packaging>jar</packaging>
 
     <properties>
-
+        <logback.version>1.2.3</logback.version>
+        <log4j-over-slf4j.version>1.7.30</log4j-over-slf4j.version>
     </properties>
     <dependencies>
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-java</artifactId>
-            <version>1.12.1</version>
+            <version>1.13.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-streaming-java_2.11</artifactId>
-            <version>1.12.1</version>
+            <artifactId>flink-streaming-java_2.12</artifactId>
+            <version>1.13.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
             <artifactId>flink-clients_2.11</artifactId>
-            <version>1.12.1</version>
+            <version>1.13.0</version>
         </dependency>
         <!-- 引入 kafka 连接器的依赖 -->
         <dependency>
@@ -42,6 +43,26 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-access</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>log4j-over-slf4j</artifactId>
+            <version>${log4j-over-slf4j.version}</version>
         </dependency>
     </dependencies>
 

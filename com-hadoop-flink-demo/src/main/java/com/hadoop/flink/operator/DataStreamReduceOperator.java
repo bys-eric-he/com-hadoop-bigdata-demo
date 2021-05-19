@@ -97,7 +97,7 @@ public class DataStreamReduceOperator {
         //4> UserAction(userID=userID1, eventTime=-1, eventType=, productID=, productPrice=20)
         //4> UserAction(userID=userID1, eventTime=-1, eventType=, productID=, productPrice=30)
         //4> UserAction(userID=userID1, eventTime=-1, eventType=, productID=, productPrice=40)
-        result.print();
+        result.print("Reduce结果：->");
 
         env.execute();
     }
