@@ -1,0 +1,12 @@
+server:
+  port: 8098
+
+elasticsearch:
+  address: 10.2.13.6:9200,10.2.13.6:9201,10.2.13.6:9202
+  client:
+    schema: http
+    connectTimeOut: 1000
+    socketTimeOut: 30000
+    connectionRequestTime: 500
+    maxConnectNum: 100
+    maxConnectPerRoute: 100
