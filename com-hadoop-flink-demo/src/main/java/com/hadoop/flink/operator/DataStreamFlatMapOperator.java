@@ -21,17 +21,7 @@ public class DataStreamFlatMapOperator {
                 );
 
         // 转换: 将包含chocolates的句子转换为每行一个单词
-        SingleOutputStreamOperator<String> result = source.flatMap(new FlatMapFunction<String, String>() {
-            @Override
-            public void flatMap(String value, Collector<String> out) throws Exception {
-                if(value.contains("chocolates")){
-                    String[] words = value.split(" ");
-                    for (String word : words) {
-                        out.collect(word);
-                    }
-                }
-            }
-        });
+        SingleOutputStreamOperator<String> result = source.flatMap(new MyFlatMapFunction());
 
         // 输出: 输出到控制台
         // Life
@@ -44,5 +34,17 @@ public class DataStreamFlatMapOperator {
         result.print("--------FlatMap--------");
 
         env.execute();
+    }
+
+    public static class MyFlatMapFunction implements FlatMapFunction<String, String>{
+        @Override
+        public void flatMap(String value, Collector<String> out) throws Exception {
+            if(value.contains("chocolates")){
+                String[] words = value.split(" ");
+                for (String word : words) {
+                    out.collect(word);
+                }
+            }
+        }
     }
 }
