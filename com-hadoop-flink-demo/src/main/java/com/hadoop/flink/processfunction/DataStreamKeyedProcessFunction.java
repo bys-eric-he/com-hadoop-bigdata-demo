@@ -4,10 +4,11 @@ import com.hadoop.flink.pojo.SensorReading;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.flink.api.common.state.ValueState;
 import org.apache.flink.api.common.state.ValueStateDescriptor;
-import org.apache.flink.api.java.tuple.Tuple;
+import org.apache.flink.api.java.functions.KeySelector;
 import org.apache.flink.api.java.utils.ParameterTool;
 import org.apache.flink.configuration.Configuration;
 import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.streaming.api.datastream.KeyedStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
 import org.apache.flink.streaming.api.functions.KeyedProcessFunction;
 import org.apache.flink.util.Collector;
@@ -49,8 +50,14 @@ public class DataStreamKeyedProcessFunction {
         });
 
         // 测试KeyedProcessFunction，先分组然后自定义处理
-        dataStream.keyBy("id")
-                .process(new MyProcess())
+        KeyedStream<SensorReading, String> result = dataStream.keyBy(new KeySelector<SensorReading, String>() {
+            @Override
+            public String getKey(SensorReading value) throws Exception {
+                return value.getId();
+            }
+        });
+
+        result.process(new MyProcess())
                 .print("----KeyedProcessFunction 处理结果-----");
 
         env.execute();
@@ -59,9 +66,9 @@ public class DataStreamKeyedProcessFunction {
     /**
      * 实现自定义的处理函数
      */
-    public static class MyProcess extends KeyedProcessFunction<Tuple, SensorReading, Integer> {
-        // 自定义状态，利用State进行统计
-        ValueState<Long> tsTimerState;
+    public static class MyProcess extends KeyedProcessFunction<String, SensorReading, Integer> {
+        // 自定义状态，利用State进行统计温度
+        ValueState<Double> tsTimerState;
 
         /**
          * 初始化状态
@@ -71,7 +78,7 @@ public class DataStreamKeyedProcessFunction {
          */
         @Override
         public void open(Configuration parameters) throws Exception {
-            tsTimerState = getRuntimeContext().getState(new ValueStateDescriptor<Long>("ts-timer", Long.class));
+            tsTimerState = getRuntimeContext().getState(new ValueStateDescriptor<Double>("ts-timer", Double.class));
         }
 
         /**
@@ -93,7 +100,7 @@ public class DataStreamKeyedProcessFunction {
             ctx.timerService().currentWatermark();
             //注册事件时间定时器
             ctx.timerService().registerProcessingTimeTimer(ctx.timerService().currentProcessingTime() + 5000L);
-            tsTimerState.update(ctx.timerService().currentProcessingTime() + 1000L);
+            tsTimerState.update(value.getTemperature());
             /*
             ctx.timerService().registerEventTimeTimer((value.getTimestamp() + 10) * 1000L);
             ctx.timerService().deleteProcessingTimeTimer(tsTimerState.value());
@@ -112,11 +119,11 @@ public class DataStreamKeyedProcessFunction {
         public void onTimer(long timestamp, OnTimerContext ctx, Collector<Integer> out) throws Exception {
 
             // 取得当前值
-            Tuple currentKey = ctx.getCurrentKey();
-            // 取得State状态
-            Long timer = tsTimerState.value();
+            String currentKey = ctx.getCurrentKey();
+            // 取得State状态中的温度值
+            Double temperature = tsTimerState.value();
 
-            System.out.println("onTimer被触发,触发时间：" + timestamp + " ValueState状态值：" + timer);
+            System.out.println("onTimer被触发,触发时间：" + timestamp + " 传感器id:" + currentKey + " 当前温度：" + temperature);
             ctx.timeDomain();
         }
 
