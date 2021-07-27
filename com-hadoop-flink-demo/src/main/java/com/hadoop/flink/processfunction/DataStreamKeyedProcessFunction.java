@@ -68,6 +68,10 @@ public class DataStreamKeyedProcessFunction {
      */
     public static class MyProcess extends KeyedProcessFunction<String, SensorReading, Integer> {
         // 自定义状态，利用State进行统计温度
+        // ValueState: 状态保存的是一个值，可以通过update()来更新，value()获取。
+        // ListState: 状态保存的是一个列表，通过add()添加数据，通过get()方法返回一个Iterable来遍历状态值。
+        // ReducingState: 这种状态通过用户传入的reduceFunction，每次调用add方法添加值的时候，会调用reduceFunction，最后合并到一个单一的状态值。
+        // MapState：即状态值为一个map。用户通过put或putAll方法添加元素。
         ValueState<Double> tsTimerState;
 
         /**

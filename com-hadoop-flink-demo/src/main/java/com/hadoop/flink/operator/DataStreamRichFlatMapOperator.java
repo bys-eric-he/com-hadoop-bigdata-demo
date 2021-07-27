@@ -22,6 +22,7 @@ public class DataStreamRichFlatMapOperator {
         String host = null;
         int port = 8080;
 
+
         try {
             ParameterTool parameterTool = ParameterTool.fromArgs(args);
             host = parameterTool.get("host");
@@ -65,11 +66,19 @@ public class DataStreamRichFlatMapOperator {
             long count;
         }
 
+        // ValueState: 状态保存的是一个值，可以通过update()来更新，value()获取。
+        // ListState: 状态保存的是一个列表，通过add()添加数据，通过get()方法返回一个Iterable来遍历状态值。
+        // ReducingState: 这种状态通过用户传入的reduceFunction，每次调用add方法添加值的时候，会调用reduceFunction，最后合并到一个单一的状态值。
+        // MapState：即状态值为一个map。用户通过put或putAll方法添加元素。
         ValueState<StateFalg> state;
 
         @Override
         public void open(Configuration parameters) throws Exception {
-            //创建一个状态值
+            // 创建一个状态值
+            // 通过创建一个StateDescriptor，可以得到一个包含特定名称的状态句柄
+            // 可以分别创建ValueStateDescriptor、 ListStateDescriptor或ReducingStateDescriptor状态句柄。
+            // 状态是通过RuntimeContext来访问的，因此只能在RichFunction中访问状态。
+            // 这就要求UDF时要继承Rich函数，例如RichMapFunction、RichFlatMapFunction等。
             ValueStateDescriptor<StateFalg> valueStateDescriptor = new ValueStateDescriptor<>("state", StateFalg.class);
             state = getRuntimeContext().getState(valueStateDescriptor);
         }
